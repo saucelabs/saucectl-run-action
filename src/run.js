@@ -20,6 +20,7 @@ function buildSaucectlArgs(opts) {
     if (opts.suite) {
         args.push('--suite', opts.suite);
     }
+    return args;
 }
 
 async function saucectlRun(opts) {
