@@ -1,4 +1,5 @@
 const core = require("@actions/core");
+const childProcess = require("child_process");
 const fs = require('fs');
 const { promisify } = require("util");
 const { awaitExecution } = require("./helpers");
