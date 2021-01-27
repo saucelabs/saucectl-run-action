@@ -1,17 +1,14 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
-const semver = require('semver');
 const childProcess = require("child_process");
 const tc = require('@actions/tool-cache');
 const { installSaucelabs } = require("./installer");
-const {} = require("./executer");
+
+const config = require("./config");
 
 async function run() {
-    const versionSpec = core.getInput('saucectl-version');
-    if (!semver.valid(versionSpec)) {
-        core.setFailed("Invalid version format");
-    }
-    await installSaucelabs({ versionSpec });
+    const cfg = config.get();
+    await installSaucelabs(cfg.saucectlVersion);
 
     const child = childProcess.spawn('saucectl', ['--version']);
     child.stdout.pipe(process.stdout);
