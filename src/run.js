@@ -1,12 +1,12 @@
 const core = require("@actions/core");
-const { lstat } = require('fs');
+const fs = require('fs');
 const { promisify } = require("util");
 
-const lstat = promisify(lstat)
+const lstat = promisify(fs.lstat)
 
 async function saucectlRun({ workingDirectory }) {
     if (workingDirectory) {
-        const stats = await fs.lstat(workingDirectory);
+        const stats = await lstat(workingDirectory);
         if (!stats.isDirectory()) {
             core.setFailed(`${workingDirectory} does not exists.`);
             return false;
