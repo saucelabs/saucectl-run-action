@@ -21,7 +21,6 @@ function getPlatform() {
     return osName && arch && `${osName}_${arch}`;
 }
 
-
 async function selectCompatibleVersion(versionSpec) {
     const octokit = new Octokit();
     const response = await octokit.request("GET /repos/:org/:repo/releases", {
@@ -38,35 +37,26 @@ async function selectCompatibleVersion(versionSpec) {
     }
 }
 
-async function installSaucelabs(options) {
-    let { versionSpec } = options;
-
-    core.info('Resolving ...');
+async function saucectlInstall({ versionSpec }) {
     const release = await selectCompatibleVersion(versionSpec);
     const resolvedVersion = release.tag_name;
     const asset = await release.assets.find(asset => asset.name.includes(getPlatform()));
+    core.info(`Installing saucectl v${resolvedVersion}...`);
 
     // https://github.com/actions/setup-node/blob/main/src/installer.ts#L52
     //toolPath = tc.find('node', versionSpec);
-    core.info('Downloading ...');
     const downloadPath = await tc.downloadTool(asset.browser_download_url);
 
-    core.info('Extracting ...');
     let extPath;
     if (os.platform() == 'win32') {
         extPath = await tc.extractZip(downloadPath);
     } else {
         extPath = await tc.extractTar(downloadPath);
     }
-
-    core.info('Installing...');
     toolPath = await tc.cacheDir(extPath, 'saucectl', resolvedVersion);
-
-    core.info('Adding to path...');
     core.addPath(toolPath);
-
-    core.info('Done');
+    core.info(`saucectl v${resolvedVersion} installed !`);
     return asset;
 }
 
-module.exports = { installSaucelabs, selectCompatibleVersion, getPlatform };
+module.exports = { saucectlInstall };
