@@ -41,7 +41,7 @@ async function saucectlInstall({ versionSpec }) {
     const release = await selectCompatibleVersion(versionSpec);
     const resolvedVersion = release.tag_name;
     const asset = await release.assets.find(asset => asset.name.includes(getPlatform()));
-    core.info(`Installing saucectl v${resolvedVersion}...`);
+    core.info(`Installing saucectl ${resolvedVersion}...`);
 
     // https://github.com/actions/setup-node/blob/main/src/installer.ts#L52
     //toolPath = tc.find('node', versionSpec);
@@ -55,7 +55,7 @@ async function saucectlInstall({ versionSpec }) {
     }
     toolPath = await tc.cacheDir(extPath, 'saucectl', resolvedVersion);
     core.addPath(toolPath);
-    core.info(`saucectl v${resolvedVersion} installed !`);
+    core.info(`saucectl ${resolvedVersion} installed !`);
     return asset;
 }
 
