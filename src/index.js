@@ -2,6 +2,7 @@ const core = require("@actions/core");
 const childProcess = require("child_process");
 const { saucectlInstall } = require("./install");
 const { saucectlRun } = require("./run");
+const { awaitExecution } = require("./helpers");
 
 const config = require("./config");
 
@@ -19,9 +20,8 @@ async function run() {
     const child = childProcess.spawn('saucectl', ['--version']);
     child.stdout.pipe(process.stdout);
     child.stderr.pipe(process.stderr);
-    child.on('exit', (exitCode) => {
-        process.exit(exitCode);
-    });
+    const exitCode = await awaitExecution(child);
+    core.info(`ExitCode: ${exitCode}`);
 
     // Really execute saucectl
     if (!cfg.skipRun) {
