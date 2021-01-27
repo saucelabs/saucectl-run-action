@@ -24,4 +24,4 @@ const get = function() {
     return sauceConfig;
 }
 
-export default { get }
+module.exports = { get };

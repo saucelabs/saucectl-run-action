@@ -4,6 +4,8 @@ author: 'felix@saucelabs.com'
 inputs:
   saucectl-version:
     description: 'Version Spec of the version to use.  Examples: v0.18.x, v0.18.1, >=v0.19.0. Default: latest'
+  skip-run:
+    description: 'Only install saucectl. Default: false'
   working-directory:
     description: 'Folder to run in. Default: .'
   config-file:
