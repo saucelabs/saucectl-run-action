@@ -1,4 +1,4 @@
-import semver from 'semver';
+const semver = require('semver');
 
 const defaultConfig = {
     saucectlVersion: 'latest',
