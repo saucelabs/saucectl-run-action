@@ -64,4 +64,4 @@ async function saucectlInstall({ versionSpec }) {
     return true;
 }
 
-module.exports = { saucectlInstall };
+module.exports = { getPlatform, selectCompatibleVersion, saucectlInstall };
