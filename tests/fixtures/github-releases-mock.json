@@ -1,0 +1,138 @@
+[
+  {
+    "tag_name": "v0.25.1",
+    "name": "v0.25.1",
+    "assets": [
+      {
+        "name": "checksums.txt",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.25.1/checksums.txt"
+      },
+      {
+        "name": "saucectl_0.25.1_linux_32-bit.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.25.1/saucectl_0.25.1_linux_32-bit.tar.gz"
+      },
+      {
+        "name": "saucectl_0.25.1_linux_64-bit.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.25.1/saucectl_0.25.1_linux_64-bit.tar.gz"
+      },
+      {
+        "name": "saucectl_0.25.1_linux_arm64.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.25.1/saucectl_0.25.1_linux_arm64.tar.gz"
+      },
+      {
+        "name": "saucectl_0.25.1_mac_64-bit.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.25.1/saucectl_0.25.1_mac_64-bit.tar.gz"
+      },
+      {
+        "name": "saucectl_0.25.1_win_32-bit.zip",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.25.1/saucectl_0.25.1_win_32-bit.zip"
+      },
+      {
+        "name": "saucectl_0.25.1_win_64-bit.zip",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.25.1/saucectl_0.25.1_win_64-bit.zip"
+      }
+    ]
+  },
+  {
+    "tag_name": "v0.25.0",
+    "name": "v0.25.0",
+    "assets": [
+      {
+        "name": "checksums.txt",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.25.0/checksums.txt"
+      },
+      {
+        "name": "saucectl_0.25.0_linux_32-bit.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.25.0/saucectl_0.25.0_linux_32-bit.tar.gz"
+      },
+      {
+        "name": "saucectl_0.25.0_linux_64-bit.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.25.0/saucectl_0.25.0_linux_64-bit.tar.gz"
+      },
+      {
+        "name": "saucectl_0.25.0_linux_arm64.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.25.0/saucectl_0.25.0_linux_arm64.tar.gz"
+      },
+      {
+        "name": "saucectl_0.25.0_mac_64-bit.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.25.0/saucectl_0.25.0_mac_64-bit.tar.gz"
+      },
+      {
+        "name": "saucectl_0.25.0_win_32-bit.zip",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.25.0/saucectl_0.25.0_win_32-bit.zip"
+      },
+      {
+        "name": "saucectl_0.25.0_win_64-bit.zip",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.25.0/saucectl_0.25.0_win_64-bit.zip"
+      }
+    ]
+  },
+  {
+    "tag_name": "v0.24.1",
+    "name": "v0.24.1",
+    "assets": [
+      {
+        "name": "checksums.txt",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.24.1/checksums.txt"
+      },
+      {
+        "name": "saucectl_0.24.1_linux_32-bit.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.24.1/saucectl_0.24.1_linux_32-bit.tar.gz"
+      },
+      {
+        "name": "saucectl_0.24.1_linux_64-bit.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.24.1/saucectl_0.24.1_linux_64-bit.tar.gz"
+      },
+      {
+        "name": "saucectl_0.24.1_linux_arm64.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.24.1/saucectl_0.24.1_linux_arm64.tar.gz"
+      },
+      {
+        "name": "saucectl_0.24.1_mac_64-bit.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.24.1/saucectl_0.24.1_mac_64-bit.tar.gz"
+      },
+      {
+        "name": "saucectl_0.24.1_win_32-bit.zip",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.24.1/saucectl_0.24.1_win_32-bit.zip"
+      },
+      {
+        "name": "saucectl_0.24.1_win_64-bit.zip",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.24.1/saucectl_0.24.1_win_64-bit.zip"
+      }
+    ]
+  },
+  {
+    "tag_name": "v0.24.0",
+    "name": "v0.24.0",
+    "assets": [
+      {
+        "name": "checksums.txt",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.24.0/checksums.txt"
+      },
+      {
+        "name": "saucectl_0.24.0_linux_32-bit.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.24.0/saucectl_0.24.0_linux_32-bit.tar.gz"
+      },
+      {
+        "name": "saucectl_0.24.0_linux_64-bit.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.24.0/saucectl_0.24.0_linux_64-bit.tar.gz"
+      },
+      {
+        "name": "saucectl_0.24.0_linux_arm64.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.24.0/saucectl_0.24.0_linux_arm64.tar.gz"
+      },
+      {
+        "name": "saucectl_0.24.0_mac_64-bit.tar.gz",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.24.0/saucectl_0.24.0_mac_64-bit.tar.gz"
+      },
+      {
+        "name": "saucectl_0.24.0_win_32-bit.zip",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.24.0/saucectl_0.24.0_win_32-bit.zip"
+      },
+      {
+        "name": "saucectl_0.24.0_win_64-bit.zip",
+        "browser_download_url": "https://github.com/saucelabs/saucectl/releases/download/v0.24.0/saucectl_0.24.0_win_64-bit.zip"
+      }
+    ]
+  }
+]
