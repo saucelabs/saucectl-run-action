@@ -14,7 +14,9 @@ async function run() {
     }
 
     // Install saucectl
-    await saucectlInstall({ versionSpec: cfg.saucectlVersion });
+    if (!await saucectlInstall({ versionSpec: cfg.saucectlVersion })) {
+        return;
+    }
 
     // Run it to confirm version
     const child = childProcess.spawn('saucectl', ['--version']);
@@ -25,7 +27,9 @@ async function run() {
 
     // Really execute saucectl
     if (!cfg.skipRun) {
-        await saucectlRun(cfg);
+        if (!await saucectlRun(cfg)) {
+            return;
+        }
     }
 }
 
