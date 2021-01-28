@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "description": "A GitHub actions providing control of saucectl",
   "main": "lib/index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/saucectl/saucectl-action.git"
@@ -24,6 +23,7 @@
     "semver": "^7.3.2"
   },
   "devDependencies": {
+    "@octokit/fixtures": "^21.3.4",
     "jest": "^26.6.3",
     "jest-mock": "^26.6.2",
     "rewire": "^5.0.0"
