@@ -40,11 +40,13 @@ async function saucectlRun(opts) {
 
     const child = childProcess.spawn('saucectl', saucectlArgs);
     child.stdout.pipe(process.stdout);
-    child.stderr.pipe(process.stderr);
     const exitCode = await awaitExecution(child);
-    core.info(`ExitCode: ${exitCode}`);
 
-    return exitCode == 0;
+    if (exitCode != 0) {
+        core.setFailed(`saucectl: Failure`);
+        return false;
+    }
+    return true;
 };
 
 module.exports = { saucectlRun };
