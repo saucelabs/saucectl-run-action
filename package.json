@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "description": "A GitHub actions providing control of saucectl",
   "main": "src/index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx jest"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/saucectl/saucectl-run-action.git"
