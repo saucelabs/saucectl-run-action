@@ -1,7 +1,6 @@
 jest.mock("os");
 const os = require("os");
 
-const rewire = require("rewire");
 const fs = require("fs");
 
 const nock = require('nock');
