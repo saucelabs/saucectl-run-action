@@ -18,4 +18,4 @@ inputs:
     description: 'Limit execution to one suite.'
 runs:
   using: 'node12'
-  main: 'src/index.js'
+  main: 'dist/main/index.js'

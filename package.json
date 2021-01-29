@@ -2,7 +2,7 @@
   "name": "saucectl-run-action",
   "version": "0.1.0",
   "description": "A GitHub actions providing control of saucectl",
-  "main": "dist/main/index.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "ncc build src/index.js -o dist/main",
     "test": "npx jest"
