@@ -1,21 +1,36 @@
-name: 'Setup Saucectl'
-description: 'Setup saucectl and adding it to the PATH'
-author: 'felix@saucelabs.com'
+name: Saucectl Run Action
+description: A GitHub action to run your saucectl tests
+author: felix@saucelabs.com
+branding:
+    icon: tool
+    color: red
 inputs:
   saucectl-version:
-    description: 'Version Spec of the version to use.  Examples: v0.18.x, v0.18.1, >=v0.19.0. Default: latest'
+    description: Version to use
+    default: latest
+    required: false
   working-directory:
-    description: 'Folder to run in. Default: .'
+    description: Folder to run
+    default: .
+    required: false
   config-file:
-    description: 'Configuration file to use with saucectl. Default: .sauce/config.yml'
+    description: Configuration file to use with saucectl
+    default: .sauce/config.yml
+    required: false
   region:
-    description: 'Region to pass to saucectl.'
-  environment:
-    description: 'Environment. Values: docker, sauce. Default: docker'
+    description: gion to pass to saucectl.
+    required: false
+  testing-environment:
+    description: Testing Environment
+    default: docker
+    required: false
   skip-run:
-    description: 'Only install saucectl. Default: false'
+    description: Skip execution of saucectl (only install binary)
+    default: false
+    required: false
   suite:
-    description: 'Limit execution to one suite.'
+    description: Suite to be tested
+    required: false
 runs:
   using: 'node12'
   main: 'dist/main/index.js'
