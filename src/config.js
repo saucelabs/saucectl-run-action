@@ -31,4 +31,4 @@ const get = function() {
     return sauceConfig;
 }
 
-module.exports = { get };
+module.exports = { get, defaultConfig };
