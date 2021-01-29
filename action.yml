@@ -6,7 +6,7 @@ branding:
     color: red
 inputs:
   saucectl-version:
-    description: Version to use
+    description: Version of saucectl to use. Example: v0.25.1
     default: latest
     required: false
   working-directory:
