@@ -6,8 +6,14 @@ branding:
     color: red
 inputs:
   saucectl-version:
-    description: Version of saucectl to use. Example: v0.25.1
+    description: 'Version of saucectl to use. Example: v0.25.1'
     default: latest
+    required: false
+  sauce-username:
+    description: Sauce Labs user name.
+    required: false
+  sauce-access-key:
+    description: Sauce Labs API Key.
     required: false
   working-directory:
     description: Folder to run
