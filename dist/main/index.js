@@ -11420,6 +11420,8 @@ const semver = __nccwpck_require__(1383);
 
 const defaultConfig = {
     saucectlVersion: 'latest',
+    sauceUsername: undefined,
+    sauceAccessKey: undefined,
     workingDirectory: ".",
     configurationFile: undefined,
     runRegion: undefined,
@@ -11431,6 +11433,8 @@ const defaultConfig = {
 const get = function() {
     let sauceConfig = {
         saucectlVersion: core.getInput('saucectl-version') || defaultConfig.saucectlVersion,
+        sauceUsername: core.getInput('sauce-username') || process.env.SAUCE_USERNAME || defaultConfig.sauceUsername,
+        sauceAccessKey: core.getInput('sauce-access-key') || process.env.SAUCE_ACCESS_KEY || defaultConfig.sauceAccessKey,
         workingDirectory: core.getInput('working-directory') || defaultConfig.workingDirectory,
         configurationFile: core.getInput('configuration-file') || defaultConfig.configurationFile,
         runRegion: core.getInput('region') || defaultConfig.runRegion,
@@ -11626,7 +11630,7 @@ async function saucectlRun(opts) {
     core.info("Launching saucectl !");
     const saucectlArgs = buildSaucectlArgs(opts);
 
-    const child = childProcess.spawn('saucectl', saucectlArgs);
+    const child = childProcess.spawn('saucectl', saucectlArgs, {env: {...process.env, SAUCE_USERNAME: opts.SAUCE_USERNAME, SAUCE_ACCESS_KEY: opts.SAUCE_ACCESS_KEY}});
     child.stdout.pipe(process.stdout);
     const exitCode = await awaitExecution(child);
 

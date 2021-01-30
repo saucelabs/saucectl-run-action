@@ -2,67 +2,86 @@
 
 This action install and launch [saucectl](https://github.com/saucelabs/saucectl/) tests.
 
-## Usage
+## Example
 
 ### Basic
 
 ```
-      - uses: saucelabs/saucectl-action@master
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        name: Action Test
+        steps:
+            # ...
+            - uses: saucelabs/saucectl-action@v1
+            # ...
 ```
 
 ### Advanced
 
 ```
-      - uses: saucelabs/saucectl-action@master
-        with:
-          saucectl-version: v0.24.2
-          working-directory: ./testrunner-toolkit/cypress/
-          region: us-west-1
-          environment: sauce
-        env:
-          SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        name: Action Test
+        steps:
+        - uses: saucelabs/saucectl-action@master
+            with:
+                sauce-username: ${{ secrets.SAUCE_USERNAME }}
+                sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
+                saucectl-version: v0.25.1
+                working-directory: ./testrunner-toolkit/cypress/
+                testing-environment: sauce
 
 ```
 
-## Parameters
+## Inputs
 
-### saucectl-version
+## saucectl-version
 
-The version of saucectl to be used. \
-By default, latest version available is used.
+Version of saucectl to use. \
+Default: latest
 
-### working-directory
+## sauce-username
 
-This parameters allow you to run a project outside of the root folder of the repository.
+Sauce Labs user name.
 
-### config-file
+## sauce-access-key
 
-Sets the config file to be used. \
-*Default*: `.sauce/config.yml`.
+Sauce Labs Access Key.
+
+##  working-directory
+
+Folder in-which saucectl will be run.\
+Default: `.`
+
+## config-file
+
+Configuration file to use with saucectl.\
+Default: `.sauce/config.yml`
 
 > This value is relative to `working-directory`.
 
-### region
 
-Sets the region to be provided to saucectl.
+## region
+
+Region flag to pass to saucectl.
 
 > Similar to `--region <region>` parameter available in saucectl.
 
-### environment
+## testing-environment
 
-Sets the testing environment. \
-Values: `docker` or `sauce`
+Testing Environment to use.\
+Default: `docker`
 
 > Similar to `--test-env <env>` parameter available in saucectl.
 
-### skip-run
+## skip-run
 
-Sets the action to only install saucectl but avoid executing tests.
+Skip execution of saucectl (only install binary).
 
+## suite
 
-### suite
-
-Sets which suite to be run.
+Suite to run.
 
 > Similar to `--suite <suite>` parameter available in saucectl.

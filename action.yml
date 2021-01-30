@@ -16,7 +16,7 @@ inputs:
     description: Sauce Labs API Key.
     required: false
   working-directory:
-    description: Folder to run
+    description: Folder in-which saucectl will be run.
     default: .
     required: false
   config-file:
