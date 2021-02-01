@@ -16,12 +16,6 @@
   "bugs": {
     "url": "https://github.com/saucectl/saucectl-run-action/issues"
   },
-  "jest": {
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.js"
-    ]
-  },
   "homepage": "https://github.com/saucectl/saucectl-run-action#readme",
   "dependencies": {
     "@actions/core": "^1.2.6",
