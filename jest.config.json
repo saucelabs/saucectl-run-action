@@ -4,8 +4,11 @@
       "src/**/*.js"
     ],
     "coverageThreshold": {
-        "branches": 50,
-        "functions": 50,
-        "lines": 50
+        "global": {
+            "branches": 62,
+            "functions": 25,
+            "lines": 39,
+            "statements": 39
+        }
     }
 }

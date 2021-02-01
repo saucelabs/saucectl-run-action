@@ -48,4 +48,4 @@ async function saucectlRun(opts) {
     return true;
 };
 
-module.exports = { saucectlRun };
+module.exports = { saucectlRun, awaitExecution, buildSaucectlArgs };
