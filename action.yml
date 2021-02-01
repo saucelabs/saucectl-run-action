@@ -1,0 +1,42 @@
+name: Saucectl Run Action
+description: A GitHub action to run your saucectl tests
+author: felix@saucelabs.com
+branding:
+    icon: tool
+    color: red
+inputs:
+  saucectl-version:
+    description: 'Version of saucectl to use. Example: v0.25.1'
+    default: latest
+    required: false
+  sauce-username:
+    description: Sauce Labs user name.
+    required: false
+  sauce-access-key:
+    description: Sauce Labs API Key.
+    required: false
+  working-directory:
+    description: Folder in-which saucectl will be run.
+    default: .
+    required: false
+  config-file:
+    description: Configuration file to use with saucectl
+    default: .sauce/config.yml
+    required: false
+  region:
+    description: gion to pass to saucectl.
+    required: false
+  testing-environment:
+    description: Testing Environment
+    default: docker
+    required: false
+  skip-run:
+    description: Skip execution of saucectl (only install binary)
+    default: false
+    required: false
+  suite:
+    description: Suite to be tested
+    required: false
+runs:
+  using: 'node12'
+  main: 'dist/main/index.js'

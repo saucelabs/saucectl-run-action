@@ -1,0 +1,14 @@
+{
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coverageThreshold": {
+        "global": {
+            "branches": 62,
+            "functions": 25,
+            "lines": 39,
+            "statements": 39
+        }
+    }
+}
