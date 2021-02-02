@@ -13,7 +13,7 @@ jobs:
         name: Action Test
         steps:
             # ...
-            - uses: saucelabs/saucectl-action@v1
+            - uses: saucelabs/saucectl-run-action@v1
             # ...
 ```
 
@@ -25,7 +25,7 @@ jobs:
         runs-on: ubuntu-latest
         name: Action Test
         steps:
-        - uses: saucelabs/saucectl-action@master
+        - uses: saucelabs/saucectl-run-action@v1
             with:
                 sauce-username: ${{ secrets.SAUCE_USERNAME }}
                 sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
