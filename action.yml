@@ -2,7 +2,7 @@ name: Saucectl Run Action
 description: A GitHub action to run your saucectl tests
 author: felix@saucelabs.com
 branding:
-    icon: tool
+    icon: check-circle
     color: red
 inputs:
   saucectl-version:
