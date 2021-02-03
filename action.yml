@@ -1,5 +1,5 @@
 name: Saucectl Run Action
-description: A GitHub action to run your saucectl tests
+description: A GitHub action to run your tests locally or on Sauce Labs
 author: felix@saucelabs.com
 branding:
     icon: check-circle
