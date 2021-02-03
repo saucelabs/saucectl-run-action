@@ -1,6 +1,6 @@
 # Saucectl Run Action from Sauce Labs
 
-This action install and launch [saucectl](https://github.com/saucelabs/saucectl/) tests. \
+This action installs [saucectl](https://github.com/saucelabs/saucectl/) and launches tests. \
 You can use it to run your tests on Sauce Labs !
 
 ## Example
