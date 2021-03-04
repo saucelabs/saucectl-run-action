@@ -9,31 +9,30 @@ You can use it to run your tests on Sauce Labs !
 
 ```
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        name: Action Test
-        steps:
-            # ...
-            - uses: saucelabs/saucectl-run-action@v1
-            # ...
+  test:
+    runs-on: ubuntu-latest
+    name: Action Test
+    steps:
+      # ...
+      - uses: saucelabs/saucectl-run-action@v1
+      # ...
 ```
 
 ### Advanced
 
 ```
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        name: Action Test
-        steps:
-        - uses: saucelabs/saucectl-run-action@v1
-            with:
-                sauce-username: ${{ secrets.SAUCE_USERNAME }}
-                sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
-                saucectl-version: v0.25.1
-                working-directory: ./testrunner-toolkit/cypress/
-                testing-environment: sauce
-
+  test:
+    runs-on: ubuntu-latest
+    name: Action Test
+    steps:
+      - uses: saucelabs/saucectl-run-action@v1
+        with:
+          sauce-username: ${{ secrets.SAUCE_USERNAME }}
+          sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
+          saucectl-version: v0.25.1
+          working-directory: ./testrunner-toolkit/cypress/
+          testing-environment: sauce
 ```
 
 ## Inputs
