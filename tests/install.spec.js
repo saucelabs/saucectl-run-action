@@ -13,7 +13,7 @@ beforeAll(() => {
 it("Version matching", async () => {
     // rewire wrapping
     const selectCompatibleVersion = install.selectCompatibleVersion;
-    const testCases = [["0.25.1", "v0.25.1"], ["0.25.0", "v0.25.0"], ["^0.25.0", "v0.25.1"], [">=0.24.0", "v0.25.1"], ["0.24.x", "v0.24.1"]];
+    const testCases = [["latest", "v0.25.1"], ["0.25.1", "v0.25.1"], ["0.25.0", "v0.25.0"], ["^0.25.0", "v0.25.1"], [">=0.24.0", "v0.25.1"], ["0.24.x", "v0.24.1"]];
     for (let i = 0; i < testCases.length; i++) {
         const scope = nock('https://api.github.com')
             .get('/repos/saucelabs/saucectl/releases')
