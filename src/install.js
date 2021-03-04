@@ -30,7 +30,7 @@ async function selectCompatibleVersion(versionSpec) {
     
     const versions = response.data;
     for (let i = 0; i < versions.length; i++) {
-        if (versionSpec === undefined
+        if (versionSpec === undefined || versionSpec === "latest"
             || semver.satisfies(versions[i].tag_name, versionSpec)) {
             return versions[i];
         }
