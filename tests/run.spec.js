@@ -1,7 +1,11 @@
 
+jest.mock("child_process");
+jest.mock("../src/helpers.js");
+const childProcess = require("child_process");
 const { expect, it } = require("@jest/globals");
 const config = require("../src/config.js");
 const run = require("../src/run.js");
+const helpers = require("../src/helpers.js");
 
 it("Argument builds", async () => {
     const testCases = [{
@@ -29,5 +33,22 @@ it("Argument builds", async () => {
         const {input, expected} = testCases[i];
         const output = run.buildSaucectlArgs(input);
         expect(output).toStrictEqual(expected);
+    }
+});
+
+it('Start saucectl', async () => {
+    childProcess.spawn.mockReturnValue({});
+    const tests = [{
+        returnValue: 0,
+        expectedValue: true
+    }, {
+        returnValue: 1,
+        expectedValue: false
+    }];
+    for (let i = 0; i < tests.length; i++) {
+        const testCase = tests[i];
+        helpers.awaitExecution.mockReturnValue(testCase.returnValue);
+        const status = await run.saucectlRun({});
+        expect(status).toBe(testCase.expectedValue);
     }
 });
