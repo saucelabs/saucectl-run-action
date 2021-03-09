@@ -11538,8 +11538,6 @@ async function run() {
     const exitCode = await awaitExecution(child);
     core.info(`ExitCode: ${exitCode}`);
 
-    console.log(cfg);
-
     // Really execute saucectl
     if (!cfg.skipRun) {
         if (!await saucectlRun(cfg)) {
