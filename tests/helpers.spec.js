@@ -13,6 +13,6 @@ describe('Helpers', () => {
   it('Returns failure', async () => {
     const child = childProcess.spawn('ls', ['-l', '/non-existent-dir']);
     const retValue = await helpers.awaitExecution(child);
-    expect(retValue).toBe(1);
+    expect(retValue).not.toBe(0);
   });
 });
