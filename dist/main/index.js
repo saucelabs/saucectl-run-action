@@ -11670,7 +11670,7 @@ async function saucectlRun(opts) {
     core.info("Launching saucectl !");
     const saucectlArgs = buildSaucectlArgs(opts);
 
-    const child = childProcess.spawn('saucectl', saucectlArgs, { env: { ...process.env }});
+    const child = childProcess.spawn('saucectl', saucectlArgs, { env: { ...process.env, SAUCE_USERNAME: opts.sauceUsername }});
     const exitCode = await awaitExecution(child);
 
     if (exitCode != 0) {
