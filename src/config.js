@@ -22,7 +22,7 @@ const get = function() {
         configurationFile: core.getInput('configuration-file') || defaultConfig.configurationFile,
         runRegion: core.getInput('region') || defaultConfig.runRegion,
         runEnvironment: core.getInput('environment') || defaultConfig.runEnvironment,
-        skipRun: core.getInput('skip-run').toLowerCase() == 'true',
+        skipRun: (core.getInput('skip-run') || '').toLowerCase() == 'true',
         suite: core.getInput('suite') || defaultConfig.suite,
     };
 
