@@ -22,6 +22,8 @@ it("Config default values", async () => {
         },
     }];
 
+    delete process.env.SAUCE_USERNAME;
+    delete process.env.SAUCE_ACCESS_KEY;
     for (let i = 0; i < testCases.length; i++) {
         failed = false;
 

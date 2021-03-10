@@ -11439,7 +11439,7 @@ const get = function() {
         configurationFile: core.getInput('configuration-file') || defaultConfig.configurationFile,
         runRegion: core.getInput('region') || defaultConfig.runRegion,
         runEnvironment: core.getInput('environment') || defaultConfig.runEnvironment,
-        skipRun: core.getInput('skip-run') || defaultConfig.skipRun,
+        skipRun: (core.getInput('skip-run') || '').toLowerCase() == 'true',
         suite: core.getInput('suite') || defaultConfig.suite,
     };
 
@@ -11668,7 +11668,7 @@ async function saucectlRun(opts) {
     core.info("Launching saucectl !");
     const saucectlArgs = buildSaucectlArgs(opts);
 
-    const child = childProcess.spawn('saucectl', saucectlArgs, {env: {...process.env, SAUCE_USERNAME: opts.SAUCE_USERNAME, SAUCE_ACCESS_KEY: opts.SAUCE_ACCESS_KEY}});
+    const child = childProcess.spawn('saucectl', saucectlArgs, { env: { ...process.env, SAUCE_USERNAME: opts.sauceUsername, SAUCE_ACCESS_KEY: opts.sauceAccessKey }});
     const exitCode = await awaitExecution(child);
 
     if (exitCode != 0) {
