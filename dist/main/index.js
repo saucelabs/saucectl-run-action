@@ -11436,9 +11436,9 @@ const get = function() {
         sauceUsername: core.getInput('sauce-username') || process.env.SAUCE_USERNAME || defaultConfig.sauceUsername,
         sauceAccessKey: core.getInput('sauce-access-key') || process.env.SAUCE_ACCESS_KEY || defaultConfig.sauceAccessKey,
         workingDirectory: core.getInput('working-directory') || defaultConfig.workingDirectory,
-        configurationFile: core.getInput('configuration-file') || defaultConfig.configurationFile,
+        configurationFile: core.getInput('config-file') || core.getInput('configuration-file') || defaultConfig.configurationFile,
         runRegion: core.getInput('region') || defaultConfig.runRegion,
-        runEnvironment: core.getInput('environment') || defaultConfig.runEnvironment,
+        runEnvironment: core.getInput('test-environment') || core.getInput('environment') || defaultConfig.runEnvironment,
         skipRun: (core.getInput('skip-run') || '').toLowerCase() == 'true',
         suite: core.getInput('suite') || defaultConfig.suite,
     };
