@@ -9,8 +9,13 @@ const defaultConfig = {
     configurationFile: undefined,
     runRegion: undefined,
     runEnvironment: undefined,
+    concurrency: undefined,
+    timeout: undefined,
+    sauceignore: undefined,
     skipRun: false,
     suite: undefined,
+    tunnelId: undefined,
+    tunnelParent: undefined,
 };
 
 const get = function() {
@@ -21,9 +26,14 @@ const get = function() {
         workingDirectory: core.getInput('working-directory') || defaultConfig.workingDirectory,
         configurationFile: core.getInput('config-file') || core.getInput('configuration-file') || defaultConfig.configurationFile,
         runRegion: core.getInput('region') || defaultConfig.runRegion,
-        runEnvironment: core.getInput('test-environment') || core.getInput('environment') || defaultConfig.runEnvironment,
+        runEnvironment: core.getInput('testing-environment') || core.getInput('test-environment') || core.getInput('environment') || defaultConfig.runEnvironment,
+        concurrency: core.getInput('concurrency') || defaultConfig.concurrency,
+        timeout: core.getInput('timeout') || defaultConfig.timeout,
+        sauceignore: core.getInput('sauceignore') || defaultConfig.sauceignore,
         skipRun: (core.getInput('skip-run') || '').toLowerCase() == 'true',
         suite: core.getInput('suite') || defaultConfig.suite,
+        tunnelId: core.getInput('tunnel-id') || defaultConfig.tunnelId,
+        tunnelParent: core.getInput('tunnel-parent') || defaultConfig.tunnelParent,
     };
 
     if (sauceConfig.saucectlVersion != "latest") {

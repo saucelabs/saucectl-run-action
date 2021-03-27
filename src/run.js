@@ -17,8 +17,20 @@ function buildSaucectlArgs(opts) {
     if (opts.runEnvironment) {
         args.push('--test-env', opts.runEnvironment);
     }
+    if (opts.concurrency) {
+        args.push('--ccy', opts.concurrency);
+    }
     if (opts.suite) {
         args.push('--suite', opts.suite);
+    }
+    if (opts.timeout) {
+        args.push('--timeout', opts.timeout);
+    }
+    if (opts.tunnelId) {
+        args.push('--tunnel-id', opts.tunnelId);
+    }
+    if (opts.tunnelParent) {
+        args.push('--tunnel-parent', opts.tunnelParent);
     }
     return args;
 }
