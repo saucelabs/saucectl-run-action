@@ -3,7 +3,15 @@ const os = require("os");
 
 const fs = require("fs");
 
+jest.mock("@actions/core");
+const core = require("@actions/core");
+
+jest.mock("@actions/tool-cache");
+const tc = require("@actions/tool-cache");
+
+
 const nock = require('nock');
+
 const install = require("../src/install.js");
 
 beforeAll(() => {
@@ -38,4 +46,58 @@ it("Platform matching", async () => {
         os.arch.mockImplementation(() => archName );
         expect(install.getPlatform()).toBe(expected);
     }
+});
+
+describe("Installation", () => {
+    it("Invalid version", async () => {
+        os.platform.mockReturnValue('linux');
+        os.arch.mockReturnValue('x64');
+        const scope = nock('https://api.github.com')
+            .get('/repos/saucelabs/saucectl/releases')
+            .reply(200, JSON.parse(fs.readFileSync("./tests/fixtures/github-releases-mock.json")));
+
+        const ret = await install.saucectlInstall({ versionSpec: '0.29.5' });
+        expect(ret).toBe(false);
+        expect(scope.isDone()).toBe(true);
+    });
+
+    it("Install version - linux", async () => {
+        os.platform.mockReturnValue('linux');
+        os.arch.mockReturnValue('x64');
+        const downloadFn = tc.downloadTool.mockReturnValue('/tmp/install-dir');
+        const extractFn = tc.extractTar.mockReturnValue('/tmp/install-dir-extracted');
+        const addPathFn = core.addPath.mockReturnValue('/bin/saucectl');
+
+        const scope = nock('https://api.github.com')
+            .get('/repos/saucelabs/saucectl/releases')
+            .reply(200, JSON.parse(fs.readFileSync("./tests/fixtures/github-releases-mock.json")));
+
+        const ret = await install.saucectlInstall({ versionSpec: '0.25.1' });
+
+        expect(ret).toBe(true);
+        expect(scope.isDone()).toBe(true);
+        expect(downloadFn).toHaveBeenCalled();
+        expect(extractFn).toHaveBeenCalled();
+        expect(addPathFn).toHaveBeenCalled();
+    });
+
+    it("Install version - windows", async () => {
+        os.platform.mockReturnValue('win32');
+        os.arch.mockReturnValue('x32');
+        const downloadFn = tc.downloadTool.mockReturnValue('/tmp/install-dir');
+        const extractFn = tc.extractZip.mockReturnValue('/tmp/install-dir-extracted');
+        const addPathFn = core.addPath.mockReturnValue('/bin/saucectl');
+
+        const scope = nock('https://api.github.com')
+            .get('/repos/saucelabs/saucectl/releases')
+            .reply(200, JSON.parse(fs.readFileSync("./tests/fixtures/github-releases-mock.json")));
+
+        const ret = await install.saucectlInstall({ versionSpec: '0.25.1' });
+
+        expect(ret).toBe(true);
+        expect(scope.isDone()).toBe(true);
+        expect(downloadFn).toHaveBeenCalled();
+        expect(extractFn).toHaveBeenCalled();
+        expect(addPathFn).toHaveBeenCalled();
+    });
 });

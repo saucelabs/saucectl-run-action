@@ -18,22 +18,36 @@ const defaultConfig = {
     tunnelParent: undefined,
 };
 
+const getSettingString = function(keys, defaultValue) {
+    for (const key of keys) {
+        const value = core.getInput(key)
+        if (value) {
+            return core.getInput(key);
+        }
+    }
+    return defaultValue;
+}
+
+const getSettingBool = function(keys, defaultValue) {
+    return getSettingString(keys, defaultValue.toString()).toLowerCase() == 'true'
+}
+
 const get = function() {
     let sauceConfig = {
-        saucectlVersion: core.getInput('saucectl-version') || defaultConfig.saucectlVersion,
-        sauceUsername: core.getInput('sauce-username') || process.env.SAUCE_USERNAME || defaultConfig.sauceUsername,
-        sauceAccessKey: core.getInput('sauce-access-key') || process.env.SAUCE_ACCESS_KEY || defaultConfig.sauceAccessKey,
-        workingDirectory: core.getInput('working-directory') || defaultConfig.workingDirectory,
-        configurationFile: core.getInput('config-file') || core.getInput('configuration-file') || defaultConfig.configurationFile,
-        runRegion: core.getInput('region') || defaultConfig.runRegion,
-        runEnvironment: core.getInput('testing-environment') || core.getInput('test-environment') || core.getInput('environment') || defaultConfig.runEnvironment,
-        concurrency: core.getInput('concurrency') || defaultConfig.concurrency,
-        timeout: core.getInput('timeout') || defaultConfig.timeout,
-        sauceignore: core.getInput('sauceignore') || defaultConfig.sauceignore,
-        skipRun: (core.getInput('skip-run') || '').toLowerCase() == 'true',
-        suite: core.getInput('suite') || defaultConfig.suite,
-        tunnelId: core.getInput('tunnel-id') || defaultConfig.tunnelId,
-        tunnelParent: core.getInput('tunnel-parent') || defaultConfig.tunnelParent,
+        saucectlVersion: getSettingString(['saucectl-version'],  defaultConfig.saucectlVersion),
+        sauceUsername: getSettingString(['sauce-username'], process.env.SAUCE_USERNAME),
+        sauceAccessKey: getSettingString(['sauce-access-key'], process.env.SAUCE_ACCESS_KEY),
+        workingDirectory: getSettingString(['working-directory'], defaultConfig.workingDirectory),
+        configurationFile: getSettingString(['config-file', 'configuration-file'], defaultConfig.configurationFile),
+        runRegion: getSettingString(['region'],  defaultConfig.runRegion),
+        runEnvironment: getSettingString(['testing-environment', 'test-environment', 'environment'], defaultConfig.runEnvironment),
+        concurrency: getSettingString(['concurrency'], defaultConfig.concurrency),
+        timeout: getSettingString(['timeout'], defaultConfig.timeout),
+        sauceignore: getSettingString(['sauceignore'], defaultConfig.sauceignore),
+        skipRun: getSettingBool(['skip-run'], defaultConfig.skipRun),
+        suite: getSettingString(['suite'], defaultConfig.suite),
+        tunnelId: getSettingString(['tunnel-id'], defaultConfig.tunnelId),
+        tunnelParent: getSettingString(['tunnel-parent'],  defaultConfig.tunnelParent),
     };
 
     if (sauceConfig.saucectlVersion != "latest") {
@@ -45,4 +59,4 @@ const get = function() {
     return sauceConfig;
 }
 
-module.exports = { get, defaultConfig };
+module.exports = { get, defaultConfig, getSettingBool, getSettingString };
