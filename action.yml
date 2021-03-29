@@ -30,6 +30,21 @@ inputs:
     description: Testing Environment
     default: docker
     required: false
+  concurrency:
+    description: Concurency
+    required: false
+  sauceignore:
+    description: Specifies the path to the .sauceignore file
+    required: false
+  timeout:
+    description: test timeout in seconds
+    required: false
+  tunnel-id:
+    description: Sets the sauce-connect tunnel ID to be used for the run
+    required: false
+  tunnel-parent:
+    description: Sets the sauce-connect tunnel parent to be used for the run
+    required: false
   skip-run:
     description: Skip execution of saucectl (only install binary)
     default: false

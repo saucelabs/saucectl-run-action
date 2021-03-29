@@ -17,8 +17,20 @@ function buildSaucectlArgs(opts) {
     if (opts.runEnvironment) {
         args.push('--test-env', opts.runEnvironment);
     }
+    if (opts.concurrency) {
+        args.push('--ccy', opts.concurrency);
+    }
     if (opts.suite) {
         args.push('--suite', opts.suite);
+    }
+    if (opts.timeout) {
+        args.push('--timeout', opts.timeout);
+    }
+    if (opts.tunnelId) {
+        args.push('--tunnel-id', opts.tunnelId);
+    }
+    if (opts.tunnelParent) {
+        args.push('--tunnel-parent', opts.tunnelParent);
     }
     return args;
 }
@@ -37,6 +49,7 @@ async function saucectlRun(opts) {
 
     core.info("Launching saucectl !");
     const saucectlArgs = buildSaucectlArgs(opts);
+    core.info(`Command-line: saucectl ${saucectlArgs.join(" ")}`)
 
     const child = childProcess.spawn('saucectl', saucectlArgs, { env: { ...process.env, SAUCE_USERNAME: opts.sauceUsername, SAUCE_ACCESS_KEY: opts.sauceAccessKey }});
     const exitCode = await awaitExecution(child);
