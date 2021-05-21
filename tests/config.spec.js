@@ -3,7 +3,7 @@ jest.mock("@actions/core");
 const core = require("@actions/core");
 const { expect } = require("@jest/globals");
 
-const { get, defaultConfig, getSettingBool, getSettingObject, getSettingString } = require("../src/config");
+const { get, defaultConfig, getSettingBool, getEnvVariables, getSettingString } = require("../src/config");
 
 let failed;
 
@@ -51,14 +51,34 @@ it("Config value accessor", async () => {
 });
 
 
-it("Config object values", async () => {
+it("Config env values", async () => {
     testCases = [{
-        params: { 'env': {'key1': 'val1', 'key2': 'val2'}},
+        params: { 'env': 'key1=val1\nkey2=val2\n' },
         requested: ['env'],
-        defaultValue: {},
         expected: {
             failed: true,
-            config: {...defaultConfig, env: { key1: 'val1', key2: 'val2'}},
+            config: {...defaultConfig, env: ['key1=val1', 'key2=val2'] },
+        },
+    }, {
+        params: { 'env': 'key1=val1' },
+        requested: ['env'],
+        expected: {
+            failed: true,
+            config: {...defaultConfig, env: ['key1=val1'] },
+        },
+    }, {
+        params: { 'env': 'key1=val1\nkey2=val2\n\n' },
+        requested: ['env'],
+        expected: {
+            failed: true,
+            config: {...defaultConfig, env: ['key1=val1', 'key2=val2'] },
+        },
+    }, {
+        params: { 'env': 'k=\nkey1=val1\nkey2=val2\n\n' },
+        requested: ['env'],
+        expected: {
+            failed: true,
+            config: {...defaultConfig, env: ['k=', 'key1=val1', 'key2=val2'] },
         },
     }];
 
@@ -67,10 +87,10 @@ it("Config object values", async () => {
     for (const testCase of testCases) {
         failed = false;
 
-        const {params, requested, defaultValue, expected} = testCase;
+        const {params, requested, expected} = testCase;
         const getCalls = core.getInput.mockImplementation((key) => params[key]);
 
-        const getResult = getSettingObject(requested, defaultValue);
+        const getResult = getEnvVariables(requested);
 
         expect(getResult).toEqual(expected.config.env);
         getCalls.mockRestore();

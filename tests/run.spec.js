@@ -42,7 +42,7 @@ it("Argument builds", async () => {
         input: { ...config.defaultConfig, logDir: 'path/to/logs' },
         expected: ['run', '--logDir', 'path/to/logs']
     }, {
-        input: { ...config.defaultConfig, env: { key1: 'val1', key2: 'val2'}},
+        input: { ...config.defaultConfig, env: ['key1=val1', 'key2=val2']},
         expected: ['run', '-e', 'key1=val1', '-e', 'key2=val2']
     }];
 

@@ -18,17 +18,19 @@ const defaultConfig = {
     tunnelParent: undefined,
     showConsoleLog: false,
     logDir: undefined,
-    env: {},
+    env: [],
 };
 
-const getSettingObject = function(keys, defaultValue) {
-    for (const key of keys) {
-        const value = core.getInput(key);
-        if (value) {
-            return value;
+const getEnvVariables = function(keys) {
+    const str = getSettingString(keys, "");
+    const lines = str.split("\n");
+    const envVars = [];
+    for (const line of lines) {
+        if (line !== "") {
+            envVars.push(line);
         }
     }
-    return defaultValue;
+    return envVars;
 }
 
 const getSettingString = function(keys, defaultValue) {
@@ -61,7 +63,7 @@ const get = function() {
         suite: getSettingString(['suite'], defaultConfig.suite),
         tunnelId: getSettingString(['tunnel-id'], defaultConfig.tunnelId),
         tunnelParent: getSettingString(['tunnel-parent'],  defaultConfig.tunnelParent),
-        env: getSettingObject(['env'], defaultConfig.env),
+        env: getEnvVariables(['env']),
         showConsoleLog: getSettingBool(['show-console-log'], defaultConfig.showConsoleLog),
         logDir: getSettingString(['logDir'], defaultConfig.logDir),
     };
@@ -75,4 +77,4 @@ const get = function() {
     return sauceConfig;
 }
 
-module.exports = { get, defaultConfig, getSettingBool, getSettingString, getSettingObject };
+module.exports = { get, defaultConfig, getSettingBool, getSettingString, getEnvVariables };

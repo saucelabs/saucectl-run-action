@@ -41,8 +41,8 @@ function buildSaucectlArgs(opts) {
     if (opts.logDir) {
         args.push('--logDir', opts.logDir)
     }
-    for (const key in opts.env) {
-        args.push('-e', `${key}=${opts.env[key]}`);
+    for (const env of opts.env || []) {
+        args.push('-e', env);
     }
     return args;
 }
