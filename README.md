@@ -85,3 +85,39 @@ Skip execution of saucectl (only install binary).
 Suite to run.
 
 > Similar to `--suite <suite>` parameter available in saucectl.
+
+## concurrency
+
+Concurency to use.
+
+> Similar to `--ccy <ccy>` parameter available in saucectl.
+
+## env
+
+Environement variables to add.
+
+> Similar to `-e` parameter available in saucectl.
+
+Due to github actions limitation, environement variables needs to be passed as a string. \
+Example:
+```
+      - uses: saucelabs/saucectl-run-action@v1
+        with:
+          sauce-username: ${{ secrets.SAUCE_USERNAME }}
+          sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
+          env: |
+            MY_FIRST_VAR=VALUE
+            MY_SECOND_VAR=VALUE
+```
+
+## showConsoleLog
+
+Display console.log when tests succeed
+
+> Similar to `--show-console-log` parameter available in saucectl.
+
+## logDir
+
+Path where to store logs.
+
+> Similar to `--logDir <path>` parameter available in saucectl.
