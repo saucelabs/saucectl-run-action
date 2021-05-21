@@ -11433,13 +11433,24 @@ const defaultConfig = {
     suite: undefined,
     tunnelId: undefined,
     tunnelParent: undefined,
+    env: {},
 };
+
+const getSettingObject = function(keys, defaultValue) {
+    for (const key of keys) {
+        const value = core.getInput(key);
+        if (value) {
+            return value;
+        }
+    }
+    return defaultValue;
+}
 
 const getSettingString = function(keys, defaultValue) {
     for (const key of keys) {
         const value = core.getInput(key)
         if (value) {
-            return core.getInput(key);
+            return value;
         }
     }
     return defaultValue;
@@ -11465,18 +11476,19 @@ const get = function() {
         suite: getSettingString(['suite'], defaultConfig.suite),
         tunnelId: getSettingString(['tunnel-id'], defaultConfig.tunnelId),
         tunnelParent: getSettingString(['tunnel-parent'],  defaultConfig.tunnelParent),
+        env: getSettingObject(['env'], defaultConfig.env),
     };
 
     if (sauceConfig.saucectlVersion != "latest") {
         if (!semver.valid(sauceConfig.saucectlVersion)) {
-            core.setFailed(`saucectl-version: ${sauceConfig}: invalid version format`);
+            core.setFailed(`saucectl-version: ${sauceConfig.saucectlVersion}: invalid version format`);
             sauceConfig.saucectlVersion = undefined;
         }
     }
     return sauceConfig;
 }
 
-module.exports = { get, defaultConfig, getSettingBool, getSettingString };
+module.exports = { get, defaultConfig, getSettingBool, getSettingString, getSettingObject };
 
 /***/ }),
 
@@ -11685,6 +11697,9 @@ function buildSaucectlArgs(opts) {
     }
     if (opts.tunnelParent) {
         args.push('--tunnel-parent', opts.tunnelParent);
+    }
+    for (const key in opts.env) {
+        args.push('-e', key, opts.env[key]);
     }
     return args;
 }
