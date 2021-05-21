@@ -63,7 +63,7 @@ const get = function() {
         tunnelParent: getSettingString(['tunnel-parent'],  defaultConfig.tunnelParent),
         env: getSettingObject(['env'], defaultConfig.env),
         showConsoleLog: getSettingBool(['show-console-log'], defaultConfig.showConsoleLog),
-        logDir: getSettingBool(['logDir'], defaultConfig.logDir),
+        logDir: getSettingString(['logDir'], defaultConfig.logDir),
     };
 
     if (sauceConfig.saucectlVersion != "latest") {

@@ -42,7 +42,7 @@ function buildSaucectlArgs(opts) {
         args.push('--logDir', opts.logDir)
     }
     for (const key in opts.env) {
-        args.push('-e', key, opts.env[key]);
+        args.push('-e', `${key}=${opts.env[key]}`);
     }
     return args;
 }
