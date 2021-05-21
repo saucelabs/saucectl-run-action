@@ -11721,8 +11721,13 @@ async function saucectlRun(opts) {
     const { workingDirectory } = opts;
 
     if (workingDirectory) {
-        const stats = await lstat(workingDirectory);
-        if (!stats.isDirectory()) {
+        let stats;
+        try {
+            stats = await lstat(workingDirectory);
+        } catch {
+            core.warning(`${workingDirectory} is unexistant`);
+        }
+        if (!stats || !stats.isDirectory()) {
             core.setFailed(`${workingDirectory} does not exists.`);
             return false;
         }

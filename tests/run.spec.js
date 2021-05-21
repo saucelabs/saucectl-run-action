@@ -56,16 +56,30 @@ it("Argument builds", async () => {
 it('Start saucectl', async () => {
     childProcess.spawn.mockReturnValue({});
     const tests = [{
+        params: {},
         returnValue: 0,
         expectedValue: true
     }, {
+        params: {},
+        returnValue: 1,
+        expectedValue: false
+    }, {
+        params: {
+            workingDirectory: '.',
+        },
+        returnValue: 0,
+        expectedValue: true
+    }, {
+        params: {
+            workingDirectory: '/non-existent',
+        },
         returnValue: 1,
         expectedValue: false
     }];
     for (let i = 0; i < tests.length; i++) {
         const testCase = tests[i];
         helpers.awaitExecution.mockReturnValue(testCase.returnValue);
-        const status = await run.saucectlRun({});
+        const status = await run.saucectlRun(testCase.params);
         expect(status).toBe(testCase.expectedValue);
     }
 });
