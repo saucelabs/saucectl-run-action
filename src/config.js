@@ -16,6 +16,8 @@ const defaultConfig = {
     suite: undefined,
     tunnelId: undefined,
     tunnelParent: undefined,
+    showConsoleLog: false,
+    logDir: undefined,
     env: {},
 };
 
@@ -60,6 +62,8 @@ const get = function() {
         tunnelId: getSettingString(['tunnel-id'], defaultConfig.tunnelId),
         tunnelParent: getSettingString(['tunnel-parent'],  defaultConfig.tunnelParent),
         env: getSettingObject(['env'], defaultConfig.env),
+        showConsoleLog: getSettingBool(['show-console-log'], defaultConfig.showConsoleLog),
+        logDir: getSettingBool(['logDir'], defaultConfig.logDir),
     };
 
     if (sauceConfig.saucectlVersion != "latest") {

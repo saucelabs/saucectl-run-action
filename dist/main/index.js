@@ -11433,6 +11433,8 @@ const defaultConfig = {
     suite: undefined,
     tunnelId: undefined,
     tunnelParent: undefined,
+    showConsoleLog: false,
+    logDir: undefined,
     env: {},
 };
 
@@ -11477,6 +11479,8 @@ const get = function() {
         tunnelId: getSettingString(['tunnel-id'], defaultConfig.tunnelId),
         tunnelParent: getSettingString(['tunnel-parent'],  defaultConfig.tunnelParent),
         env: getSettingObject(['env'], defaultConfig.env),
+        showConsoleLog: getSettingBool(['show-console-log'], defaultConfig.showConsoleLog),
+        logDir: getSettingString(['logDir'], defaultConfig.logDir),
     };
 
     if (sauceConfig.saucectlVersion != "latest") {
@@ -11697,6 +11701,15 @@ function buildSaucectlArgs(opts) {
     }
     if (opts.tunnelParent) {
         args.push('--tunnel-parent', opts.tunnelParent);
+    }
+    if (opts.sauceignore) {
+        args.push('--sauceignore', opts.sauceignore);
+    }
+    if (opts.showConsoleLog) {
+        args.push('--show-console-log');
+    }
+    if (opts.logDir) {
+        args.push('--logDir', opts.logDir)
     }
     for (const key in opts.env) {
         args.push('-e', key, opts.env[key]);

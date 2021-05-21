@@ -32,6 +32,15 @@ function buildSaucectlArgs(opts) {
     if (opts.tunnelParent) {
         args.push('--tunnel-parent', opts.tunnelParent);
     }
+    if (opts.sauceignore) {
+        args.push('--sauceignore', opts.sauceignore);
+    }
+    if (opts.showConsoleLog) {
+        args.push('--show-console-log');
+    }
+    if (opts.logDir) {
+        args.push('--logDir', opts.logDir)
+    }
     for (const key in opts.env) {
         args.push('-e', key, opts.env[key]);
     }
