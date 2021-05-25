@@ -3,7 +3,7 @@ jest.mock("@actions/core");
 const core = require("@actions/core");
 const { expect } = require("@jest/globals");
 
-const { get, defaultConfig, getSettingBool, getSettingString } = require("../src/config");
+const { get, defaultConfig, getSettingBool, getEnvVariables, getSettingString } = require("../src/config");
 
 let failed;
 
@@ -50,35 +50,102 @@ it("Config value accessor", async () => {
     }
 });
 
-it("Config default values", async () => {
+
+it("Config env values", async () => {
     testCases = [{
-        params: {},
-        expected: {
-            failed: false,
-            config: defaultConfig,
-        },
-    }, {
-        params: { 'saucectl-version': 'v3.zx-'},
+        params: { 'env': 'key1=val1\nkey2=val2\n' },
+        requested: ['env'],
         expected: {
             failed: true,
-            config: {...defaultConfig, saucectlVersion: undefined },
+            config: {...defaultConfig, env: ['key1=val1', 'key2=val2'] },
+        },
+    }, {
+        params: { 'env': 'key1=val1' },
+        requested: ['env'],
+        expected: {
+            failed: true,
+            config: {...defaultConfig, env: ['key1=val1'] },
+        },
+    }, {
+        params: { 'env': 'key1=val1\nkey2=val2\n\n' },
+        requested: ['env'],
+        expected: {
+            failed: true,
+            config: {...defaultConfig, env: ['key1=val1', 'key2=val2'] },
+        },
+    }, {
+        params: { 'env': 'k=\nkey1=val1\nkey2=val2\n\n' },
+        requested: ['env'],
+        expected: {
+            failed: true,
+            config: {...defaultConfig, env: ['k=', 'key1=val1', 'key2=val2'] },
         },
     }];
 
     delete process.env.SAUCE_USERNAME;
     delete process.env.SAUCE_ACCESS_KEY;
-    for (let i = 0; i < testCases.length; i++) {
+    for (const testCase of testCases) {
         failed = false;
 
-        const {params, expected} = testCases[i];
-        core.getInput.mockImplementation((key) => params[key]);
-        const failedFn = core.setFailed.mockImplementation(() => {});
+        const {params, requested, expected} = testCase;
+        const getCalls = core.getInput.mockImplementation((key) => params[key]);
 
-        const getResult = get()
+        const getResult = getEnvVariables(requested);
+
+        expect(getResult).toEqual(expected.config.env);
+        getCalls.mockRestore();
+    }
+});
+
+
+it("Get global config", async () => {
+    testCases = [{
+        params: {},
+        expected: {
+            failed: false,
+            errMsg: undefined,
+            config: {...defaultConfig },
+        },
+    }, {
+        params: {
+            'saucectl-version': 'vX.Y-',
+        },
+        expected: {
+            failed: true,
+            errMsg: "saucectl-version: vX.Y-: invalid version format",
+            config: {...defaultConfig, saucectlVersion: undefined },
+        },
+    }, {
+        params: {
+            'saucectl-version': 'v0.1.2',
+        },
+        expected: {
+            failed: false,
+            errMsg: undefined,
+            config: {...defaultConfig, saucectlVersion: 'v0.1.2' },
+        },
+    }];
+
+    delete process.env.SAUCE_USERNAME;
+    delete process.env.SAUCE_ACCESS_KEY;
+    for (const testCase of testCases) {
+        let failed = false;
+        let error = undefined;
+
+        const {params, expected} = testCase;
+        const getCalls = core.getInput.mockImplementation((key) => params[key]);
+        const failedCalls = core.setFailed.mockImplementation((errMsg) => {
+            error = errMsg;
+            failed = true;
+        });
+
+        const getResult = get();
 
         expect(getResult).toEqual(expected.config);
-        if (expected.failed) {
-            expect(failedFn).toHaveBeenCalled();
-        }
+        expect(failed).toBe(expected.failed);
+        expect(error).toBe(expected.errMsg);
+
+        getCalls.mockRestore();
+        failedCalls.mockRestore();
     }
 });

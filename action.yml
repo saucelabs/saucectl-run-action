@@ -52,6 +52,16 @@ inputs:
   suite:
     description: Suite to be tested
     required: false
+  env:
+    description: Environment variables to pass to saucectl
+    required: false
+  showConsoleLog:
+    description: Display console.log when tests succeed
+    required: false
+    default: false
+  logDir:
+    description: Path where to store logs
+    required: false
 runs:
   using: 'node12'
   main: 'dist/main/index.js'

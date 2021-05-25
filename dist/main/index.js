@@ -11433,13 +11433,28 @@ const defaultConfig = {
     suite: undefined,
     tunnelId: undefined,
     tunnelParent: undefined,
+    showConsoleLog: false,
+    logDir: undefined,
+    env: [],
 };
+
+const getEnvVariables = function(keys) {
+    const str = getSettingString(keys, "");
+    const lines = str.split("\n");
+    const envVars = [];
+    for (const line of lines) {
+        if (line !== "") {
+            envVars.push(line);
+        }
+    }
+    return envVars;
+}
 
 const getSettingString = function(keys, defaultValue) {
     for (const key of keys) {
         const value = core.getInput(key)
         if (value) {
-            return core.getInput(key);
+            return value;
         }
     }
     return defaultValue;
@@ -11465,18 +11480,21 @@ const get = function() {
         suite: getSettingString(['suite'], defaultConfig.suite),
         tunnelId: getSettingString(['tunnel-id'], defaultConfig.tunnelId),
         tunnelParent: getSettingString(['tunnel-parent'],  defaultConfig.tunnelParent),
+        env: getEnvVariables(['env']),
+        showConsoleLog: getSettingBool(['show-console-log'], defaultConfig.showConsoleLog),
+        logDir: getSettingString(['logDir'], defaultConfig.logDir),
     };
 
     if (sauceConfig.saucectlVersion != "latest") {
         if (!semver.valid(sauceConfig.saucectlVersion)) {
-            core.setFailed(`saucectl-version: ${sauceConfig}: invalid version format`);
+            core.setFailed(`saucectl-version: ${sauceConfig.saucectlVersion}: invalid version format`);
             sauceConfig.saucectlVersion = undefined;
         }
     }
     return sauceConfig;
 }
 
-module.exports = { get, defaultConfig, getSettingBool, getSettingString };
+module.exports = { get, defaultConfig, getSettingBool, getSettingString, getEnvVariables };
 
 /***/ }),
 
@@ -11686,6 +11704,18 @@ function buildSaucectlArgs(opts) {
     if (opts.tunnelParent) {
         args.push('--tunnel-parent', opts.tunnelParent);
     }
+    if (opts.sauceignore) {
+        args.push('--sauceignore', opts.sauceignore);
+    }
+    if (opts.showConsoleLog) {
+        args.push('--show-console-log');
+    }
+    if (opts.logDir) {
+        args.push('--logDir', opts.logDir)
+    }
+    for (const env of opts.env || []) {
+        args.push('-e', env);
+    }
     return args;
 }
 
@@ -11693,8 +11723,13 @@ async function saucectlRun(opts) {
     const { workingDirectory } = opts;
 
     if (workingDirectory) {
-        const stats = await lstat(workingDirectory);
-        if (!stats.isDirectory()) {
+        let stats;
+        try {
+            stats = await lstat(workingDirectory);
+        } catch {
+            core.warning(`${workingDirectory} is unexistant`);
+        }
+        if (!stats || !stats.isDirectory()) {
             core.setFailed(`${workingDirectory} does not exists.`);
             return false;
         }

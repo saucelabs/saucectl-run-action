@@ -32,6 +32,18 @@ function buildSaucectlArgs(opts) {
     if (opts.tunnelParent) {
         args.push('--tunnel-parent', opts.tunnelParent);
     }
+    if (opts.sauceignore) {
+        args.push('--sauceignore', opts.sauceignore);
+    }
+    if (opts.showConsoleLog) {
+        args.push('--show-console-log');
+    }
+    if (opts.logDir) {
+        args.push('--logDir', opts.logDir)
+    }
+    for (const env of opts.env || []) {
+        args.push('-e', env);
+    }
     return args;
 }
 
@@ -39,8 +51,13 @@ async function saucectlRun(opts) {
     const { workingDirectory } = opts;
 
     if (workingDirectory) {
-        const stats = await lstat(workingDirectory);
-        if (!stats.isDirectory()) {
+        let stats;
+        try {
+            stats = await lstat(workingDirectory);
+        } catch {
+            core.warning(`${workingDirectory} is unexistant`);
+        }
+        if (!stats || !stats.isDirectory()) {
             core.setFailed(`${workingDirectory} does not exists.`);
             return false;
         }
