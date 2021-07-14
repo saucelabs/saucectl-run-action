@@ -15,6 +15,7 @@ function buildSaucectlArgs(opts) {
         args.push('--region', opts.runRegion);
     }
     if (opts.runEnvironment) {
+        core.warning(`testing-environment is deprecated. It won't worke with saucectl v0.53.0 and above.`);
         args.push('--test-env', opts.runEnvironment);
     }
     if (opts.concurrency) {

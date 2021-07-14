@@ -69,13 +69,6 @@ Region flag to pass to saucectl.
 
 > Similar to `--region <region>` parameter available in saucectl.
 
-## testing-environment
-
-Testing Environment to use.\
-Default: `docker`
-
-> Similar to `--test-env <env>` parameter available in saucectl.
-
 ## skip-run
 
 Skip execution of saucectl (only install binary).

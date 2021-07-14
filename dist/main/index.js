@@ -11665,6 +11665,7 @@ async function saucectlInstall({ versionSpec }) {
 
 module.exports = { getPlatform, selectCompatibleVersion, saucectlInstall };
 
+
 /***/ }),
 
 /***/ 2475:
@@ -11687,6 +11688,7 @@ function buildSaucectlArgs(opts) {
         args.push('--region', opts.runRegion);
     }
     if (opts.runEnvironment) {
+        core.warning(`testing-environment is deprecated. It won't worke with saucectl v0.53.0 and above.`);
         args.push('--test-env', opts.runEnvironment);
     }
     if (opts.concurrency) {
@@ -11751,6 +11753,7 @@ async function saucectlRun(opts) {
 };
 
 module.exports = { saucectlRun, awaitExecution, buildSaucectlArgs };
+
 
 /***/ }),
 
