@@ -28,7 +28,7 @@ inputs:
     required: false
   testing-environment:
     description: Testing Environment
-    default: docker
+    default: ""
     required: false
   concurrency:
     description: Concurency
