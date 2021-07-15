@@ -24,6 +24,9 @@ it("Argument builds", async () => {
         input: { ...config.defaultConfig, suite: 'mySuiteName' },
         expected: ['run', '--suite', 'mySuiteName']
     }, {
+        input: { ...config.defaultConfig, selectSuite: 'mySuiteName' },
+        expected: ['run', '--select-suite', 'mySuiteName']
+    }, {
         input: { ...config.defaultConfig, tunnelId: 'my-tunnel-id', tunnelParent: 'my-tunnel-parent' },
         expected: ['run', '--tunnel-id', 'my-tunnel-id', '--tunnel-parent', 'my-tunnel-parent']
     }, {

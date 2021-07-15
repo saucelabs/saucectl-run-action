@@ -11431,6 +11431,7 @@ const defaultConfig = {
     sauceignore: undefined,
     skipRun: false,
     suite: undefined,
+    selectSuite: undefined,
     tunnelId: undefined,
     tunnelParent: undefined,
     showConsoleLog: false,
@@ -11478,6 +11479,7 @@ const get = function() {
         sauceignore: getSettingString(['sauceignore'], defaultConfig.sauceignore),
         skipRun: getSettingBool(['skip-run'], defaultConfig.skipRun),
         suite: getSettingString(['suite'], defaultConfig.suite),
+        selectSuite: getSettingString(['select-suite'], defaultConfig.selectSuite),
         tunnelId: getSettingString(['tunnel-id'], defaultConfig.tunnelId),
         tunnelParent: getSettingString(['tunnel-parent'],  defaultConfig.tunnelParent),
         env: getEnvVariables(['env']),
@@ -11495,6 +11497,7 @@ const get = function() {
 }
 
 module.exports = { get, defaultConfig, getSettingBool, getSettingString, getEnvVariables };
+
 
 /***/ }),
 
@@ -11665,6 +11668,7 @@ async function saucectlInstall({ versionSpec }) {
 
 module.exports = { getPlatform, selectCompatibleVersion, saucectlInstall };
 
+
 /***/ }),
 
 /***/ 2475:
@@ -11687,13 +11691,18 @@ function buildSaucectlArgs(opts) {
         args.push('--region', opts.runRegion);
     }
     if (opts.runEnvironment) {
+        core.warning(`testing-environment is deprecated. It won't worke with saucectl v0.53.0 and above.`);
         args.push('--test-env', opts.runEnvironment);
     }
     if (opts.concurrency) {
         args.push('--ccy', opts.concurrency);
     }
     if (opts.suite) {
+        core.warning(`suite is deprecated. It won't work with saucectl v0.53.0 and above. You should use select-suite parameter.`);
         args.push('--suite', opts.suite);
+    }
+    if (opts.selectSuite) {
+        args.push('--select-suite', opts.selectSuite);
     }
     if (opts.timeout) {
         args.push('--timeout', opts.timeout);
@@ -11751,6 +11760,7 @@ async function saucectlRun(opts) {
 };
 
 module.exports = { saucectlRun, awaitExecution, buildSaucectlArgs };
+
 
 /***/ }),
 

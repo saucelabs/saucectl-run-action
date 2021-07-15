@@ -27,8 +27,7 @@ inputs:
     description: gion to pass to saucectl.
     required: false
   testing-environment:
-    description: Testing Environment
-    default: docker
+    description: "[deprecated] Testing Environment"
     required: false
   concurrency:
     description: Concurency
@@ -50,6 +49,9 @@ inputs:
     default: false
     required: false
   suite:
+    description: "[deprecated] Suite to be tested"
+    required: false
+  select-suite:
     description: Suite to be tested
     required: false
   env:
