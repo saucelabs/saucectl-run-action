@@ -73,11 +73,11 @@ Region flag to pass to saucectl.
 
 Skip execution of saucectl (only install binary).
 
-## suite
+## select-suite
 
-Suite to run.
+Select the suite to run.
 
-> Similar to `--suite <suite>` parameter available in saucectl.
+> Similar to `--select-suite <suite>` parameter available in saucectl.
 
 ## concurrency
 

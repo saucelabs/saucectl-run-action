@@ -11431,6 +11431,7 @@ const defaultConfig = {
     sauceignore: undefined,
     skipRun: false,
     suite: undefined,
+    selectSuite: undefined,
     tunnelId: undefined,
     tunnelParent: undefined,
     showConsoleLog: false,
@@ -11478,6 +11479,7 @@ const get = function() {
         sauceignore: getSettingString(['sauceignore'], defaultConfig.sauceignore),
         skipRun: getSettingBool(['skip-run'], defaultConfig.skipRun),
         suite: getSettingString(['suite'], defaultConfig.suite),
+        selectSuite: getSettingString(['select-suite'], defaultConfig.selectSuite),
         tunnelId: getSettingString(['tunnel-id'], defaultConfig.tunnelId),
         tunnelParent: getSettingString(['tunnel-parent'],  defaultConfig.tunnelParent),
         env: getEnvVariables(['env']),
@@ -11495,6 +11497,7 @@ const get = function() {
 }
 
 module.exports = { get, defaultConfig, getSettingBool, getSettingString, getEnvVariables };
+
 
 /***/ }),
 
@@ -11695,7 +11698,11 @@ function buildSaucectlArgs(opts) {
         args.push('--ccy', opts.concurrency);
     }
     if (opts.suite) {
+        core.warning(`suite is deprecated. It won't work with saucectl v0.53.0 and above. You should use select-suite value.`);
         args.push('--suite', opts.suite);
+    }
+    if (opts.selectSuite) {
+        args.push('--select-suite', opts.selectSuite);
     }
     if (opts.timeout) {
         args.push('--timeout', opts.timeout);

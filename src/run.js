@@ -22,7 +22,11 @@ function buildSaucectlArgs(opts) {
         args.push('--ccy', opts.concurrency);
     }
     if (opts.suite) {
+        core.warning(`suite is deprecated. It won't work with saucectl v0.53.0 and above. You should use select-suite value.`);
         args.push('--suite', opts.suite);
+    }
+    if (opts.selectSuite) {
+        args.push('--select-suite', opts.selectSuite);
     }
     if (opts.timeout) {
         args.push('--timeout', opts.timeout);
