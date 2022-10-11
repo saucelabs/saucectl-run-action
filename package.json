@@ -4,7 +4,7 @@
   "description": "A GitHub actions providing control of saucectl",
   "main": "src/index.js",
   "scripts": {
-    "build": "ncc build src/index.js -o dist/main",
+    "build": "ncc build src/index.js --license licenses.txt -o dist/main",
     "test": "npx jest",
     "prepare": "husky install"
   },
