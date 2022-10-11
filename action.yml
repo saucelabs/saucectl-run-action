@@ -1,6 +1,6 @@
 name: Saucectl Run Action
 description: A GitHub action to run your tests locally or on Sauce Labs
-author: felix@saucelabs.com
+author: devx@saucelabs.com
 branding:
     icon: check-circle
     color: red
@@ -24,13 +24,13 @@ inputs:
     default: .sauce/config.yml
     required: false
   region:
-    description: gion to pass to saucectl.
+    description: The Sauce Labs region.
     required: false
   testing-environment:
     description: "[deprecated] Testing Environment"
     required: false
   concurrency:
-    description: Concurency
+    description: Controls how many suites run in parallel.
     required: false
   sauceignore:
     description: Specifies the path to the .sauceignore file
@@ -65,5 +65,5 @@ inputs:
     description: Path where to store logs
     required: false
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/main/index.js'
