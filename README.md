@@ -14,7 +14,7 @@ jobs:
     name: Action Test
     steps:
       # ...
-      - uses: saucelabs/saucectl-run-action@v1
+      - uses: saucelabs/saucectl-run-action@v2
       # ...
 ```
 
@@ -26,11 +26,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Action Test
     steps:
-      - uses: saucelabs/saucectl-run-action@v1
+      - uses: saucelabs/saucectl-run-action@v2
         with:
           sauce-username: ${{ secrets.SAUCE_USERNAME }}
           sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
-          saucectl-version: v0.25.1
+          saucectl-version: v0.109.0
           working-directory: ./testrunner-toolkit/cypress/
           testing-environment: sauce
 ```
@@ -94,7 +94,7 @@ Environement variables to add.
 Due to github actions limitation, environement variables needs to be passed as a string. \
 Example:
 ```
-      - uses: saucelabs/saucectl-run-action@v1
+      - uses: saucelabs/saucectl-run-action@v2
         with:
           sauce-username: ${{ secrets.SAUCE_USERNAME }}
           sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
