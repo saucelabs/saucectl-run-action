@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/saucectl/saucectl-run-action.git"
   },
-  "author": "felix@saucelabs.com",
+  "author": "devx@saucelabs.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/saucectl/saucectl-run-action/issues"
