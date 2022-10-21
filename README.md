@@ -103,9 +103,9 @@ Example:
             MY_SECOND_VAR=VALUE
 ```
 
-## showConsoleLog
+## show-console-log
 
-Display console.log when tests succeed
+Display console.log when tests succeed. Set to `true` to enable.
 
 > Similar to `--show-console-log` parameter available in saucectl.
 

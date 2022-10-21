@@ -46,7 +46,7 @@ inputs:
     required: false
   skip-run:
     description: Skip execution of saucectl (only install binary)
-    default: false
+    default: "false"
     required: false
   suite:
     description: "[deprecated] Suite to be tested"
@@ -60,7 +60,7 @@ inputs:
   showConsoleLog:
     description: Display console.log when tests succeed
     required: false
-    default: false
+    default: "false"
   logDir:
     description: Path where to store logs
     required: false
