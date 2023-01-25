@@ -1,4 +1,5 @@
 const { Octokit } = require("@octokit/rest");
+const { createActionAuth } = require("@octokit/auth-action");
 const semver = require("semver");
 const os = require('os');
 const tc = require('@actions/tool-cache');

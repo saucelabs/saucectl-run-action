@@ -5536,6 +5536,37 @@ module.exports = v4;
 
 /***/ }),
 
+/***/ 20:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+var authToken = __nccwpck_require__(334);
+
+const createActionAuth = function createActionAuth() {
+  if (!process.env.GITHUB_ACTION) {
+    throw new Error("[@octokit/auth-action] `GITHUB_ACTION` environment variable is not set. @octokit/auth-action is meant to be used in GitHub Actions only.");
+  }
+  const definitions = [process.env.GITHUB_TOKEN, process.env.INPUT_GITHUB_TOKEN, process.env.INPUT_TOKEN].filter(Boolean);
+  if (definitions.length === 0) {
+    throw new Error("[@octokit/auth-action] `GITHUB_TOKEN` variable is not set. It must be set on either `env:` or `with:`. See https://github.com/octokit/auth-action.js#createactionauth");
+  }
+  if (definitions.length > 1) {
+    throw new Error("[@octokit/auth-action] The token variable is specified more than once. Use either `with.token`, `with.GITHUB_TOKEN`, or `env.GITHUB_TOKEN`. See https://github.com/octokit/auth-action.js#createactionauth");
+  }
+  const token = definitions.pop();
+  return authToken.createTokenAuth(token);
+};
+
+exports.createActionAuth = createActionAuth;
+//# sourceMappingURL=index.js.map
+
+
+/***/ }),
+
 /***/ 334:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -16309,6 +16340,7 @@ module.exports = { awaitExecution };
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const { Octokit } = __nccwpck_require__(5375);
+const { createActionAuth } = __nccwpck_require__(20);
 const semver = __nccwpck_require__(1383);
 const os = __nccwpck_require__(2037);
 const tc = __nccwpck_require__(7784);
@@ -16670,6 +16702,12 @@ async function run() {
     if (!cfg) {
         core.setFailed("Invalid configuration.");
         return;
+    }
+
+    if (!process.env.GITHUB_TOKEN) {
+        core.warning('No GITHUB_TOKEN detected.')
+        core.warning('Be sure to explicitly set GITHUB_TOKEN in saucectl-run-action step of your workflow.');
+        core.warning('Unauthenticated usage may result in "API rate limit exceeded" error.');
     }
 
     // Install saucectl
