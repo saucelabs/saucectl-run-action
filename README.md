@@ -16,7 +16,7 @@ jobs:
       # ...
       - uses: saucelabs/saucectl-run-action@v2
         env:
-          GITHUB_TOKEN: $${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
       # ...
 ```
 
@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: saucelabs/saucectl-run-action@v2
         env:
-          GITHUB_TOKEN: $${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           sauce-username: ${{ secrets.SAUCE_USERNAME }}
           sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
