@@ -15,8 +15,12 @@ jobs:
     steps:
       # ...
       - uses: saucelabs/saucectl-run-action@v2
+        env:
+          GITHUB_TOKEN: $${{ github.token }}
       # ...
 ```
+
+:warning: To avoid reaching `API rate limit exceeded` due to unauthenticated requests, be sure to provide `GITHUB_TOKEN` through `env` field.
 
 ### Advanced
 
@@ -27,6 +31,8 @@ jobs:
     name: Action Test
     steps:
       - uses: saucelabs/saucectl-run-action@v2
+        env:
+          GITHUB_TOKEN: $${{ github.token }}
         with:
           sauce-username: ${{ secrets.SAUCE_USERNAME }}
           sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}

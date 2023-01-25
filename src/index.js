@@ -13,6 +13,12 @@ async function run() {
         return;
     }
 
+    if (!process.env.GITHUB_TOKEN) {
+        core.warning('No GITHUB_TOKEN detected.')
+        core.warning('Be sure to explicitly set GITHUB_TOKEN in saucectl-run-action step of your workflow.');
+        core.warning('Unauthenticated usage may result in "API rate limit exceeded" error.');
+    }
+
     // Install saucectl
     if (!await saucectlInstall({ versionSpec: cfg.saucectlVersion })) {
         return;
