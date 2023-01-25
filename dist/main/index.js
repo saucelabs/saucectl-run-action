@@ -16364,7 +16364,17 @@ function getPlatform() {
 }
 
 async function selectCompatibleVersion(versionSpec) {
-    const octokit = new Octokit();
+    // NOTE: authStrategy is set conditionnaly. Docs specifies that GITHUB_TOKEN needs to be set explicitely.
+    //       To avoid breaking every pipeline that has no GITHUB_TOKEN set, this strategy is not passed until
+    //       a token is available.
+    //
+    // References:
+    //   - https://github.com/octokit/auth-action.js#createactionauth
+    //   - https://github.com/octokit/auth-action.js/blob/main/src/index.ts#L16-L20
+    //   - https://github.com/octokit/core.js/blob/main/src/index.ts#L121-L124
+    const octokit = new Octokit({
+        authStrategy: process.env.GITHUB_TOKEN ? createActionAuth : undefined,
+    });
     const response = await octokit.request("GET /repos/:org/:repo/releases", {
         org: "saucelabs",
         repo: "saucectl",
