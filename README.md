@@ -114,9 +114,3 @@ Example:
 Display console.log when tests succeed. Set to `true` to enable.
 
 > Similar to `--show-console-log` parameter available in saucectl.
-
-## logDir
-
-Path where to store logs.
-
-> Similar to `--logDir <path>` parameter available in saucectl.

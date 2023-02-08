@@ -16,18 +16,15 @@ inputs:
     description: Sauce Labs API Key.
     required: false
   working-directory:
-    description: Folder in-which saucectl will be run.
+    description: Folder in which saucectl will be run.
     default: .
     required: false
   config-file:
-    description: Configuration file to use with saucectl
+    description: Specify an alternative configuration file to the default .sauce/config.yml for this execution.
     default: .sauce/config.yml
     required: false
   region:
-    description: The Sauce Labs region.
-    required: false
-  testing-environment:
-    description: "[deprecated] Testing Environment"
+    description: Specifies the Sauce Labs data center through which tests will run. Valid values are us-west-1 (default) or eu-central-1.
     required: false
   concurrency:
     description: Controls how many suites run in parallel.
@@ -38,21 +35,18 @@ inputs:
   timeout:
     description: test timeout in seconds
     required: false
-  tunnel-id:
-    description: Sets the sauce-connect tunnel ID to be used for the run
+  tunnel-name:
+    description: Identifies an active Sauce Connect tunnel to use for secure connectivity to the Sauce Labs cloud.
     required: false
-  tunnel-parent:
-    description: Sets the sauce-connect tunnel parent to be used for the run
+  tunnel-owner:
+    description: Identifies the Sauce Labs user who created the specified tunnel, which is required if the user running the tests did not create the tunnel.
     required: false
   skip-run:
     description: Skip execution of saucectl (only install binary)
     default: "false"
     required: false
-  suite:
-    description: "[deprecated] Suite to be tested"
-    required: false
   select-suite:
-    description: Suite to be tested
+    description: Specifies a test suite to execute by name rather than all suites defined in the config file.
     required: false
   env:
     description: Environment variables to pass to saucectl
@@ -61,9 +55,6 @@ inputs:
     description: Display console.log when tests succeed
     required: false
     default: "false"
-  logDir:
-    description: Path where to store logs
-    required: false
 runs:
   using: 'node16'
   main: 'dist/main/index.js'

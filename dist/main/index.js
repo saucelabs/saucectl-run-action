@@ -16208,17 +16208,14 @@ const defaultConfig = {
     workingDirectory: ".",
     configurationFile: undefined,
     runRegion: undefined,
-    runEnvironment: undefined,
     concurrency: undefined,
     timeout: undefined,
     sauceignore: undefined,
     skipRun: false,
-    suite: undefined,
     selectSuite: undefined,
-    tunnelId: undefined,
-    tunnelParent: undefined,
+    tunnelName: undefined,
+    tunnelOwner: undefined,
     showConsoleLog: false,
-    logDir: undefined,
     env: [],
 };
 
@@ -16256,18 +16253,15 @@ const get = function() {
         workingDirectory: getSettingString(['working-directory'], defaultConfig.workingDirectory),
         configurationFile: getSettingString(['config-file', 'configuration-file'], defaultConfig.configurationFile),
         runRegion: getSettingString(['region'],  defaultConfig.runRegion),
-        runEnvironment: getSettingString(['testing-environment', 'test-environment', 'environment'], defaultConfig.runEnvironment),
         concurrency: getSettingString(['concurrency'], defaultConfig.concurrency),
         timeout: getSettingString(['timeout'], defaultConfig.timeout),
         sauceignore: getSettingString(['sauceignore'], defaultConfig.sauceignore),
         skipRun: getSettingBool(['skip-run'], defaultConfig.skipRun),
-        suite: getSettingString(['suite'], defaultConfig.suite),
         selectSuite: getSettingString(['select-suite'], defaultConfig.selectSuite),
-        tunnelId: getSettingString(['tunnel-id'], defaultConfig.tunnelId),
-        tunnelParent: getSettingString(['tunnel-parent'],  defaultConfig.tunnelParent),
+        tunnelName: getSettingString(['tunnel-name'], defaultConfig.tunnelName),
+        tunnelOwner: getSettingString(['tunnel-owner'],  defaultConfig.tunnelOwner),
         env: getEnvVariables(['env']),
         showConsoleLog: getSettingBool(['show-console-log'], defaultConfig.showConsoleLog),
-        logDir: getSettingString(['logDir'], defaultConfig.logDir),
     };
 
     if (sauceConfig.saucectlVersion != "latest") {
@@ -16440,16 +16434,8 @@ function buildSaucectlArgs(opts) {
     if (opts.runRegion) {
         args.push('--region', opts.runRegion);
     }
-    if (opts.runEnvironment) {
-        core.warning(`testing-environment is deprecated. It won't worke with saucectl v0.53.0 and above.`);
-        args.push('--test-env', opts.runEnvironment);
-    }
     if (opts.concurrency) {
         args.push('--ccy', opts.concurrency);
-    }
-    if (opts.suite) {
-        core.warning(`suite is deprecated. It won't work with saucectl v0.53.0 and above. You should use select-suite parameter.`);
-        args.push('--suite', opts.suite);
     }
     if (opts.selectSuite) {
         args.push('--select-suite', opts.selectSuite);
@@ -16457,20 +16443,17 @@ function buildSaucectlArgs(opts) {
     if (opts.timeout) {
         args.push('--timeout', opts.timeout);
     }
-    if (opts.tunnelId) {
-        args.push('--tunnel-id', opts.tunnelId);
+    if (opts.tunnelName) {
+        args.push('--tunnel-name', opts.tunnelName);
     }
-    if (opts.tunnelParent) {
-        args.push('--tunnel-parent', opts.tunnelParent);
+    if (opts.tunnelOwner) {
+        args.push('--tunnel-owner', opts.tunnelOwner);
     }
     if (opts.sauceignore) {
         args.push('--sauceignore', opts.sauceignore);
     }
     if (opts.showConsoleLog) {
         args.push('--show-console-log');
-    }
-    if (opts.logDir) {
-        args.push('--logDir', opts.logDir)
     }
     for (const env of opts.env || []) {
         args.push('-e', env);
