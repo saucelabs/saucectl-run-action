@@ -33,7 +33,7 @@ inputs:
     description: Specifies the path to the .sauceignore file
     required: false
   timeout:
-    description: test timeout in seconds
+    description: Global timeout that limits how long saucectl can run in total.
     required: false
   tunnel-name:
     description: Identifies an active Sauce Connect tunnel to use for secure connectivity to the Sauce Labs cloud.
@@ -42,7 +42,7 @@ inputs:
     description: Identifies the Sauce Labs user who created the specified tunnel, which is required if the user running the tests did not create the tunnel.
     required: false
   skip-run:
-    description: Skip execution of saucectl (only install binary)
+    description: Skip execution of saucectl (only install binary).
     default: "false"
     required: false
   select-suite:

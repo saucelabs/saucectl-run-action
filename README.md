@@ -3,114 +3,64 @@
 This action installs [saucectl](https://github.com/saucelabs/saucectl/) and launches tests. \
 You can use it to run your tests on Sauce Labs !
 
-## Example
+## Usage
 
-### Basic
+:warning: Avoid being throttled by GitHub. Be sure to provide `GITHUB_TOKEN` through
+the `env` field, or you may face an `API rate limit exceeded` error.
 
+```yaml
+- uses: saucelabs/saucectl-run-action@v3
+  env:
+    GITHUB_TOKEN: ${{ github.token }}
+  with:
+    # Which version of saucectl.
+    # Default: latest
+    saucectl-version: v0.109.0
+
+    # Sauce Labs Credentials.
+    sauce-username: ${{ secrets.SAUCE_USERNAME }}
+    sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
+
+    # Install saucectl, but don't run it.
+    # Default: false
+    skip-run: false
+
+    # Relative path under $GITHUB_WORKSPACE to use as the new working directory.
+    working-directory: ""
+
+    # An environment variable key-value pair that may be referenced in the tests executed by this command.
+    # Currently not supported by espresso/xcuitest.
+    env: |
+      MY_FIRST_VAR=VALUE
+      MY_SECOND_VAR=VALUE
+
+    # Specify an alternative configuration file for this execution.
+    # Default: .sauce/config.yml
+    config-file: .sauce/myconfig.yml
+
+    # Specifies the Sauce Labs data center through which tests will run.
+    # Valid values are us-west-1 or eu-central-1.
+    # Default: us-west-1
+    region: us-west-1
+
+    # Controls how many suites run in parallel.
+    # Default: 1
+    concurrency: 1
+
+    # Global timeout that limits how long saucectl can run in total.
+    # Supports duration values like '10s', '30m' etc.
+    timeout: 5m
+
+    # Identifies an active Sauce Connect tunnel to use for secure connectivity to the Sauce Labs cloud.
+    tunnel-name: ""
+
+    # Identifies the Sauce Labs user who created the specified tunnel, which is required if the user running the tests did not create the tunnel.
+    tunnel-owner: ""
+
+    # Specifies a test suite to execute by name rather than all suites defined in the config file.
+    select-suite: ""
+
+    # Includes the contents of the suite's console.log in the output of the command regardless of the test results. By default, the console log contents are shown for failed test suites only.
+    # Default: false
+    show-console-log: false
 ```
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    name: Action Test
-    steps:
-      # ...
-      - uses: saucelabs/saucectl-run-action@v2
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-      # ...
-```
-
-:warning: To avoid reaching `API rate limit exceeded` due to unauthenticated requests, be sure to provide `GITHUB_TOKEN` through `env` field.
-
-### Advanced
-
-```
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    name: Action Test
-    steps:
-      - uses: saucelabs/saucectl-run-action@v2
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          sauce-username: ${{ secrets.SAUCE_USERNAME }}
-          sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
-          saucectl-version: v0.109.0
-          working-directory: ./testrunner-toolkit/cypress/
-          testing-environment: sauce
-```
-
-## Inputs
-
-## saucectl-version
-
-Version of saucectl to use. \
-Default: latest
-
-## sauce-username
-
-Sauce Labs user name.
-
-## sauce-access-key
-
-Sauce Labs Access Key.
-
-##  working-directory
-
-Folder in-which saucectl will be run.\
-Default: `.`
-
-## config-file
-
-Configuration file to use with saucectl.\
-Default: `.sauce/config.yml`
-
-> This value is relative to `working-directory`.
-
-
-## region
-
-Region flag to pass to saucectl.
-
-> Similar to `--region <region>` parameter available in saucectl.
-
-## skip-run
-
-Skip execution of saucectl (only install binary).
-
-## select-suite
-
-Select the suite to run.
-
-> Similar to `--select-suite <suite>` parameter available in saucectl.
-
-## concurrency
-
-Concurency to use.
-
-> Similar to `--ccy <ccy>` parameter available in saucectl.
-
-## env
-
-Environement variables to add.
-
-> Similar to `-e` parameter available in saucectl.
-
-Due to github actions limitation, environement variables needs to be passed as a string. \
-Example:
-```
-      - uses: saucelabs/saucectl-run-action@v2
-        with:
-          sauce-username: ${{ secrets.SAUCE_USERNAME }}
-          sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
-          env: |
-            MY_FIRST_VAR=VALUE
-            MY_SECOND_VAR=VALUE
-```
-
-## show-console-log
-
-Display console.log when tests succeed. Set to `true` to enable.
-
-> Similar to `--show-console-log` parameter available in saucectl.
