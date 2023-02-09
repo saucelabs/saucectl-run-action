@@ -15,7 +15,7 @@ the `env` field, or you may face an `API rate limit exceeded` error.
   with:
     # Which version of saucectl.
     # Default: latest
-    saucectl-version: v0.109.0
+    saucectl-version: v0.123.0
 
     # Sauce Labs Credentials.
     sauce-username: ${{ secrets.SAUCE_USERNAME }}
