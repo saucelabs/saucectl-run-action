@@ -18,17 +18,11 @@ it("Argument builds", async () => {
         input: { ...config.defaultConfig, runRegion: 'eu-central-1' },
         expected: ['run', '--region', 'eu-central-1']
     }, {
-        input: { ...config.defaultConfig, runEnvironment: 'sauce' },
-        expected: ['run', '--test-env', 'sauce']
-    }, {
-        input: { ...config.defaultConfig, suite: 'mySuiteName' },
-        expected: ['run', '--suite', 'mySuiteName']
-    }, {
         input: { ...config.defaultConfig, selectSuite: 'mySuiteName' },
         expected: ['run', '--select-suite', 'mySuiteName']
     }, {
-        input: { ...config.defaultConfig, tunnelId: 'my-tunnel-id', tunnelParent: 'my-tunnel-parent' },
-        expected: ['run', '--tunnel-id', 'my-tunnel-id', '--tunnel-parent', 'my-tunnel-parent']
+        input: { ...config.defaultConfig, tunnelName: 'my-tunnel-name', tunnelOwner: 'my-tunnel-owner' },
+        expected: ['run', '--tunnel-name', 'my-tunnel-name', '--tunnel-owner', 'my-tunnel-owner']
     }, {
         input: { ...config.defaultConfig, concurrency: 3 },
         expected: ['run', '--ccy', 3]
@@ -41,9 +35,6 @@ it("Argument builds", async () => {
     }, {
         input: { ...config.defaultConfig, showConsoleLog: true },
         expected: ['run', '--show-console-log']
-    }, {
-        input: { ...config.defaultConfig, logDir: 'path/to/logs' },
-        expected: ['run', '--logDir', 'path/to/logs']
     }, {
         input: { ...config.defaultConfig, env: ['key1=val1', 'key2=val2']},
         expected: ['run', '-e', 'key1=val1', '-e', 'key2=val2']
