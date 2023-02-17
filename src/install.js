@@ -22,7 +22,7 @@ function getPlatform() {
     return osName && arch && `${osName}_${arch}`;
 }
 
-function needsDefaultVersion(versionSpec) {
+function isLatestRequested(versionSpec) {
     return versionSpec === undefined || versionSpec === "latest";
 }
 
@@ -52,7 +52,7 @@ async function selectCompatibleVersion(versionSpec) {
         if (versions[i].draft || versions[i].assets?.length === 0) {
             continue;
         }
-        if (needsDefaultVersion(versionSpec) && isStableVersion(versions[i])) {
+        if (isLatestRequested(versionSpec) && isStableVersion(versions[i])) {
             return versions[i];
         }
         if (semver.satisfies(versions[i].tag_name, versionSpec)) {
