@@ -22,6 +22,14 @@ function getPlatform() {
     return osName && arch && `${osName}_${arch}`;
 }
 
+function needsDefaultVersion(versionSpec) {
+    return versionSpec === undefined && versionSpec === "latest";
+}
+
+function isStableVersion(version) {
+    return !version.prerelease && !version.draft;
+}
+
 async function selectCompatibleVersion(versionSpec) {
     // NOTE: authStrategy is set conditionnaly. Docs specifies that GITHUB_TOKEN needs to be set explicitely.
     //       To avoid breaking every pipeline that has no GITHUB_TOKEN set, this strategy is not passed until
@@ -41,8 +49,14 @@ async function selectCompatibleVersion(versionSpec) {
     
     const versions = response.data;
     for (let i = 0; i < versions.length; i++) {
-        if (versionSpec === undefined || versionSpec === "latest"
-            || semver.satisfies(versions[i].tag_name, versionSpec)) {
+        // Ensure that assets are available
+        if (versions[i].assets?.length === 0) {
+            continue;
+        }
+        if (needsDefaultVersion(versionSpec) && isStableVersion(versions[i])) {
+            return versions[i];
+        }
+        if (semver.satisfies(versions[i].tag_name, versionSpec)) {
             return versions[i];
         }
     }
