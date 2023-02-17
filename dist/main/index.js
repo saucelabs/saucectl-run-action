@@ -16384,7 +16384,7 @@ async function selectCompatibleVersion(versionSpec) {
     
     const versions = response.data;
     for (let i = 0; i < versions.length; i++) {
-        if (versions[i].assets?.length === 0) {
+        if (versions[i].draft || versions[i].assets?.length === 0) {
             continue;
         }
         if (needsDefaultVersion(versionSpec) && isStableVersion(versions[i])) {
