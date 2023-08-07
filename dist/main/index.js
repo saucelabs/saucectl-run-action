@@ -16349,6 +16349,7 @@ const platformMatrix = {
 const archMatrix = {
     'x32': "32-bit",
     'x64': "64-bit",
+    'arm64': "arm64",
 };
 
 function getPlatform() {
