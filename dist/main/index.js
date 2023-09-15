@@ -16217,6 +16217,7 @@ const defaultConfig = {
     tunnelOwner: undefined,
     showConsoleLog: false,
     env: [],
+    async: false,
 };
 
 const getEnvVariables = function(keys) {
@@ -16262,6 +16263,7 @@ const get = function() {
         tunnelOwner: getSettingString(['tunnel-owner'],  defaultConfig.tunnelOwner),
         env: getEnvVariables(['env']),
         showConsoleLog: getSettingBool(['show-console-log'], defaultConfig.showConsoleLog),
+        async: getSettingBool(['async'], defaultConfig.async),
     };
 
     if (sauceConfig.saucectlVersion != "latest") {
@@ -16280,7 +16282,6 @@ module.exports = { get, defaultConfig, getSettingBool, getSettingString, getEnvV
 
 /***/ 8505:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
 
 const core = __nccwpck_require__(2186);
 
@@ -16471,6 +16472,9 @@ function buildSaucectlArgs(opts) {
     }
     for (const env of opts.env || []) {
         args.push('-e', env);
+    }
+    if (opts.async) {
+        args.push('--async');
     }
     return args;
 }
