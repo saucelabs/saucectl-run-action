@@ -39,7 +39,7 @@ it("Argument builds", async () => {
         expected: ['run', '-e', 'key1=val1', '-e', 'key2=val2']
     }, {
         input: { ...config.defaultConfig, async: true},
-        expect: ['run', '--async']
+        expected: ['run', '--async']
     }];
 
     for (let i = 0; i < testCases.length; i++) {
