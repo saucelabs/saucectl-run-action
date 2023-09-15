@@ -63,4 +63,7 @@ the `env` field, or you may face an `API rate limit exceeded` error.
     # Includes the contents of the suite's console.log in the output of the command regardless of the test results. By default, the console log contents are shown for failed test suites only.
     # Default: false
     show-console-log: false
+
+    # Launches tests without awaiting outcomes; operates in a fire-and-forget manner.
+    async: false
 ```

@@ -1,4 +1,3 @@
-
 jest.mock("child_process");
 jest.mock("../src/helpers.js");
 const childProcess = require("child_process");
@@ -38,6 +37,9 @@ it("Argument builds", async () => {
     }, {
         input: { ...config.defaultConfig, env: ['key1=val1', 'key2=val2']},
         expected: ['run', '-e', 'key1=val1', '-e', 'key2=val2']
+    }, {
+        input: { ...config.defaultConfig, async: true},
+        expect: ['run', '--async']
     }];
 
     for (let i = 0; i < testCases.length; i++) {

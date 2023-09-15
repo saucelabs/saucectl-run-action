@@ -38,6 +38,9 @@ function buildSaucectlArgs(opts) {
     for (const env of opts.env || []) {
         args.push('-e', env);
     }
+    if (opts.async) {
+        args.push('--async');
+    }
     return args;
 }
 

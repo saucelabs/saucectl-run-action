@@ -1,4 +1,3 @@
-
 const core = require("@actions/core");
 
 async function sleep(duration) {

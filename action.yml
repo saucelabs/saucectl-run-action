@@ -1,5 +1,5 @@
 name: Saucectl Run Action
-description: A GitHub action to run your tests locally or on Sauce Labs
+description: A GitHub action to run your tests locally or on Sauce Labs.
 author: devx@saucelabs.com
 branding:
     icon: check-circle
@@ -30,7 +30,7 @@ inputs:
     description: Controls how many suites run in parallel.
     required: false
   sauceignore:
-    description: Specifies the path to the .sauceignore file
+    description: Specifies the path to the .sauceignore file.
     required: false
   timeout:
     description: Global timeout that limits how long saucectl can run in total.
@@ -49,10 +49,14 @@ inputs:
     description: Specifies a test suite to execute by name rather than all suites defined in the config file.
     required: false
   env:
-    description: Environment variables to pass to saucectl
+    description: Environment variables to pass to saucectl.
     required: false
   showConsoleLog:
-    description: Display console.log when tests succeed
+    description: Display console.log when tests succeed.
+    required: false
+    default: "false"
+  async:
+    description: Launches tests without waiting for test results.
     required: false
     default: "false"
 runs:
