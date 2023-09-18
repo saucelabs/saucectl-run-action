@@ -17,6 +17,7 @@ const defaultConfig = {
     tunnelOwner: undefined,
     showConsoleLog: false,
     env: [],
+    async: false,
 };
 
 const getEnvVariables = function(keys) {
@@ -62,6 +63,7 @@ const get = function() {
         tunnelOwner: getSettingString(['tunnel-owner'],  defaultConfig.tunnelOwner),
         env: getEnvVariables(['env']),
         showConsoleLog: getSettingBool(['show-console-log'], defaultConfig.showConsoleLog),
+        async: getSettingBool(['async'], defaultConfig.async),
     };
 
     if (sauceConfig.saucectlVersion != "latest") {
