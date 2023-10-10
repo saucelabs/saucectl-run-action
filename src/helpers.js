@@ -29,7 +29,7 @@ async function awaitExecution(child) {
 
         // Enhanced timeout security: Wait for the process to exit, or no output for 2 minutes.
         // Saucectl is expected to output one . per second, so this is quite conservative to keep
-        // this thereshold at 2 minutes.
+        // this threshold at 2 minutes.
         while (!exited) {
             const currentTime = new Date().getTime();
             const twoMinutes = 2 * 60 * 1000;

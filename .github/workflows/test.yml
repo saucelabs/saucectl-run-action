@@ -6,32 +6,44 @@ on:
       - main
 
 jobs:
-  sanity:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          node-version: 16
-      - name: install devDependencies
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install Dependencies
         run: npm ci
-      - name: run the tests
-        run: npm test
-      - name: build new dist
+
+      - name: Build
         run: npx ncc build src/index.js -o dist/reference
-      - name: compare actual build with expected
+
+      - name: Compare Distribution
         run: diff -U 5 dist/reference/index.js dist/main/index.js
-  build:
+
+  test:
     strategy:
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          node-version: 16
-      - name: install devDependencies
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install Dependencies
         run: npm ci
-      - name: run the tests
+
+      - name: Test
         run: npm test
