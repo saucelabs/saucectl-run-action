@@ -6,6 +6,27 @@ on:
       - main
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Compare Distribution
+        run: diff -U 5 dist/reference/index.js dist/main/index.js
+
   test:
     strategy:
       matrix:
@@ -26,9 +47,3 @@ jobs:
 
       - name: Test
         run: npm test
-
-      - name: Build
-        run: npx ncc build src/index.js -o dist/reference
-
-      - name: Compare Distribution
-        run: diff -U 5 dist/reference/index.js dist/main/index.js
