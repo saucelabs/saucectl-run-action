@@ -18,6 +18,9 @@
     "url": "https://github.com/saucectl/saucectl-run-action/issues"
   },
   "homepage": "https://github.com/saucectl/saucectl-run-action#readme",
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1",
