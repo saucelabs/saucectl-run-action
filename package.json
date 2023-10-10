@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "ncc build src/index.js --license licenses.txt -o dist/main",
-    "test": "npx jest",
+    "test": "npx jest --forceExit",
     "prepare": "husky install"
   },
   "repository": {
