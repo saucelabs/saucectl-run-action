@@ -22,7 +22,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: npx ncc build src/index.js -o dist/reference
 
       - name: Compare Distribution
         run: diff -U 5 dist/reference/index.js dist/main/index.js
