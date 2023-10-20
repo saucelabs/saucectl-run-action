@@ -9,7 +9,7 @@ You can use it to run your tests on Sauce Labs !
 the `env` field, or you may face an `API rate limit exceeded` error.
 
 ```yaml
-- uses: saucelabs/saucectl-run-action@v3
+- uses: saucelabs/saucectl-run-action@v4
   env:
     GITHUB_TOKEN: ${{ github.token }}
   with:
