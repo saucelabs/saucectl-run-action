@@ -6,6 +6,8 @@
   "scripts": {
     "build": "ncc build src/index.js --license licenses.txt -o dist/main",
     "test": "npx jest --forceExit",
+    "lint": "prettier --check '**/*.{js,ts,mjs,cjs}' && eslint .",
+    "fmt": "prettier --write '**/*.{js,ts,mjs,cjs}'",
     "prepare": "husky install"
   },
   "repository": {
@@ -32,9 +34,15 @@
   },
   "devDependencies": {
     "@octokit/fixtures": "^22.0.6",
+    "@types/jest": "^29.5.6",
     "@vercel/ncc": "^0.38.0",
+    "eslint": "^8.52.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-jest": "^27.4.2",
+    "eslint-plugin-prettier": "^5.0.1",
     "husky": "^8.0.3",
     "jest": "^29.7.0",
-    "jest-mock": "^29.7.0"
+    "jest-mock": "^29.7.0",
+    "prettier": "^3.0.3"
   }
 }
