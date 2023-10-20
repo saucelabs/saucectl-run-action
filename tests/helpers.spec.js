@@ -1,7 +1,5 @@
-
-const childProcess = require("child_process");
-const { describe, expect, it } = require("@jest/globals");
-const helpers = require("../src/helpers.js");
+const childProcess = require('child_process');
+const helpers = require('../src/helpers.js');
 
 describe('Helpers', () => {
   it('Returns success', async () => {

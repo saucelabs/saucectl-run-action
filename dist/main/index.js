@@ -16202,80 +16202,108 @@ const core = __nccwpck_require__(2186);
 const semver = __nccwpck_require__(1383);
 
 const defaultConfig = {
-    saucectlVersion: 'latest',
-    sauceUsername: undefined,
-    sauceAccessKey: undefined,
-    workingDirectory: ".",
-    configurationFile: undefined,
-    runRegion: undefined,
-    concurrency: undefined,
-    timeout: undefined,
-    sauceignore: undefined,
-    skipRun: false,
-    selectSuite: undefined,
-    tunnelName: undefined,
-    tunnelOwner: undefined,
-    showConsoleLog: false,
-    env: [],
-    async: false,
+  saucectlVersion: 'latest',
+  sauceUsername: undefined,
+  sauceAccessKey: undefined,
+  workingDirectory: '.',
+  configurationFile: undefined,
+  runRegion: undefined,
+  concurrency: undefined,
+  timeout: undefined,
+  sauceignore: undefined,
+  skipRun: false,
+  selectSuite: undefined,
+  tunnelName: undefined,
+  tunnelOwner: undefined,
+  showConsoleLog: false,
+  env: [],
+  async: false,
 };
 
-const getEnvVariables = function(keys) {
-    const str = getSettingString(keys, "");
-    const lines = str.split("\n");
-    const envVars = [];
-    for (const line of lines) {
-        if (line !== "") {
-            envVars.push(line);
-        }
+const getEnvVariables = function (keys) {
+  const str = getSettingString(keys, '');
+  const lines = str.split('\n');
+  const envVars = [];
+  for (const line of lines) {
+    if (line !== '') {
+      envVars.push(line);
     }
-    return envVars;
-}
+  }
+  return envVars;
+};
 
-const getSettingString = function(keys, defaultValue) {
-    for (const key of keys) {
-        const value = core.getInput(key)
-        if (value) {
-            return value;
-        }
+const getSettingString = function (keys, defaultValue) {
+  for (const key of keys) {
+    const value = core.getInput(key);
+    if (value) {
+      return value;
     }
-    return defaultValue;
-}
+  }
+  return defaultValue;
+};
 
-const getSettingBool = function(keys, defaultValue) {
-    return getSettingString(keys, defaultValue.toString()).toLowerCase() == 'true'
-}
+const getSettingBool = function (keys, defaultValue) {
+  return (
+    getSettingString(keys, defaultValue.toString()).toLowerCase() == 'true'
+  );
+};
 
-const get = function() {
-    let sauceConfig = {
-        saucectlVersion: getSettingString(['saucectl-version'],  defaultConfig.saucectlVersion),
-        sauceUsername: getSettingString(['sauce-username'], process.env.SAUCE_USERNAME),
-        sauceAccessKey: getSettingString(['sauce-access-key'], process.env.SAUCE_ACCESS_KEY),
-        workingDirectory: getSettingString(['working-directory'], defaultConfig.workingDirectory),
-        configurationFile: getSettingString(['config-file', 'configuration-file'], defaultConfig.configurationFile),
-        runRegion: getSettingString(['region'],  defaultConfig.runRegion),
-        concurrency: getSettingString(['concurrency'], defaultConfig.concurrency),
-        timeout: getSettingString(['timeout'], defaultConfig.timeout),
-        sauceignore: getSettingString(['sauceignore'], defaultConfig.sauceignore),
-        skipRun: getSettingBool(['skip-run'], defaultConfig.skipRun),
-        selectSuite: getSettingString(['select-suite'], defaultConfig.selectSuite),
-        tunnelName: getSettingString(['tunnel-name'], defaultConfig.tunnelName),
-        tunnelOwner: getSettingString(['tunnel-owner'],  defaultConfig.tunnelOwner),
-        env: getEnvVariables(['env']),
-        showConsoleLog: getSettingBool(['show-console-log'], defaultConfig.showConsoleLog),
-        async: getSettingBool(['async'], defaultConfig.async),
-    };
+const get = function () {
+  let sauceConfig = {
+    saucectlVersion: getSettingString(
+      ['saucectl-version'],
+      defaultConfig.saucectlVersion,
+    ),
+    sauceUsername: getSettingString(
+      ['sauce-username'],
+      process.env.SAUCE_USERNAME,
+    ),
+    sauceAccessKey: getSettingString(
+      ['sauce-access-key'],
+      process.env.SAUCE_ACCESS_KEY,
+    ),
+    workingDirectory: getSettingString(
+      ['working-directory'],
+      defaultConfig.workingDirectory,
+    ),
+    configurationFile: getSettingString(
+      ['config-file', 'configuration-file'],
+      defaultConfig.configurationFile,
+    ),
+    runRegion: getSettingString(['region'], defaultConfig.runRegion),
+    concurrency: getSettingString(['concurrency'], defaultConfig.concurrency),
+    timeout: getSettingString(['timeout'], defaultConfig.timeout),
+    sauceignore: getSettingString(['sauceignore'], defaultConfig.sauceignore),
+    skipRun: getSettingBool(['skip-run'], defaultConfig.skipRun),
+    selectSuite: getSettingString(['select-suite'], defaultConfig.selectSuite),
+    tunnelName: getSettingString(['tunnel-name'], defaultConfig.tunnelName),
+    tunnelOwner: getSettingString(['tunnel-owner'], defaultConfig.tunnelOwner),
+    env: getEnvVariables(['env']),
+    showConsoleLog: getSettingBool(
+      ['show-console-log'],
+      defaultConfig.showConsoleLog,
+    ),
+    async: getSettingBool(['async'], defaultConfig.async),
+  };
 
-    if (sauceConfig.saucectlVersion != "latest") {
-        if (!semver.valid(sauceConfig.saucectlVersion)) {
-            core.setFailed(`saucectl-version: ${sauceConfig.saucectlVersion}: invalid version format`);
-            sauceConfig.saucectlVersion = undefined;
-        }
+  if (sauceConfig.saucectlVersion != 'latest') {
+    if (!semver.valid(sauceConfig.saucectlVersion)) {
+      core.setFailed(
+        `saucectl-version: ${sauceConfig.saucectlVersion}: invalid version format`,
+      );
+      sauceConfig.saucectlVersion = undefined;
     }
-    return sauceConfig;
-}
+  }
+  return sauceConfig;
+};
 
-module.exports = { get, defaultConfig, getSettingBool, getSettingString, getEnvVariables };
+module.exports = {
+  get,
+  defaultConfig,
+  getSettingBool,
+  getSettingString,
+  getEnvVariables,
+};
 
 
 /***/ }),
@@ -16285,46 +16313,43 @@ module.exports = { get, defaultConfig, getSettingBool, getSettingString, getEnvV
 
 const core = __nccwpck_require__(2186);
 
-async function sleep(duration) {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve(true), duration * 1000);
+function awaitExecution(child) {
+  return new Promise((resolve) => {
+    let exited = false;
+    let lastOutput = new Date().getTime();
+
+    // Log the last time a console operation has been made
+    child.stdout.on('data', (data) => {
+      lastOutput = new Date().getTime();
+      process.stdout.write(data);
     });
-}
-
-async function awaitExecution(child) {
-    return new Promise(async (resolve) => {
-        let exited = false;
-        let lastOutput = new Date().getTime();
-
-        // Log lastime a console operation has been made
-        child.stdout.on('data', (data) => {
-            lastOutput = new Date().getTime();
-            process.stdout.write(data);
-        });
-        child.stderr.on('data', (data) => {
-            lastOutput = new Date().getTime();
-            process.stderr.write(data);
-        });
-
-        // Log when child actually has exited
-        child.on('exit', (exitCode) => {
-            exited = true;
-            resolve(exitCode);
-        });
-
-        // Enhanced timeout security: Wait for the process to exit, or no output for 2 minutes.
-        // Saucectl is expected to output one . per second, so this is quite conservative to keep
-        // this threshold at 2 minutes.
-        while (!exited) {
-            const currentTime = new Date().getTime();
-            const twoMinutes = 2 * 60 * 1000;
-            if (currentTime - lastOutput > twoMinutes) {
-                core.error("saucectl: timed-out");
-                resolve(-1);
-            }
-            await sleep(1);
-        }
+    child.stderr.on('data', (data) => {
+      lastOutput = new Date().getTime();
+      process.stderr.write(data);
     });
+
+    // Log when child actually has exited
+    child.on('exit', (exitCode) => {
+      exited = true;
+      resolve(exitCode);
+    });
+
+    // Enhanced timeout security: Wait for the process to exit, or no output for 2 minutes.
+    // Saucectl is expected to output one . per second, so this is quite conservative to keep
+    // this threshold at 2 minutes.
+    const twoMinutes = 2 * 60 * 1000;
+    const checkTimeout = () => {
+      const currentTime = new Date().getTime();
+      if (currentTime - lastOutput > twoMinutes) {
+        core.error('saucectl: timed-out');
+        resolve(-1);
+      } else if (!exited) {
+        setTimeout(checkTimeout, 1000); // Check every 1 second
+      }
+    };
+
+    checkTimeout();
+  });
 }
 
 module.exports = { awaitExecution };
@@ -16343,87 +16368,89 @@ const tc = __nccwpck_require__(7784);
 const core = __nccwpck_require__(2186);
 
 const platformMatrix = {
-    'darwin': "mac",
-    'linux': "linux",
-    'win32': "win",
+  darwin: 'mac',
+  linux: 'linux',
+  win32: 'win',
 };
 
 const archMatrix = {
-    'x32': "32-bit",
-    'x64': "64-bit",
-    'arm64': "arm64",
+  x32: '32-bit',
+  x64: '64-bit',
+  arm64: 'arm64',
 };
 
 function getPlatform() {
-    const osName = platformMatrix[os.platform()];
-    const arch = archMatrix[os.arch()];
-    return osName && arch && `${osName}_${arch}`;
+  const osName = platformMatrix[os.platform()];
+  const arch = archMatrix[os.arch()];
+  return osName && arch && `${osName}_${arch}`;
 }
 
 function isLatestRequested(versionSpec) {
-    return versionSpec === undefined || versionSpec === "latest";
+  return versionSpec === undefined || versionSpec === 'latest';
 }
 
 function isStableVersion(version) {
-    return !version.prerelease && !version.draft;
+  return !version.prerelease && !version.draft;
 }
 
 async function selectCompatibleVersion(versionSpec) {
-    // NOTE: authStrategy is set conditionnaly. Docs specifies that GITHUB_TOKEN needs to be set explicitely.
-    //       To avoid breaking every pipeline that has no GITHUB_TOKEN set, this strategy is not passed until
-    //       a token is available.
-    //
-    // References:
-    //   - https://github.com/octokit/auth-action.js#createactionauth
-    //   - https://github.com/octokit/auth-action.js/blob/main/src/index.ts#L16-L20
-    //   - https://github.com/octokit/core.js/blob/main/src/index.ts#L121-L124
-    const octokit = new Octokit({
-        authStrategy: process.env.GITHUB_TOKEN ? createActionAuth : undefined,
-    });
-    const response = await octokit.request("GET /repos/:org/:repo/releases", {
-        org: "saucelabs",
-        repo: "saucectl",
-    });
-    
-    const versions = response.data;
-    for (let i = 0; i < versions.length; i++) {
-        if (versions[i].draft || versions[i].assets?.length === 0) {
-            continue;
-        }
-        if (isLatestRequested(versionSpec) && isStableVersion(versions[i])) {
-            return versions[i];
-        }
-        if (semver.satisfies(versions[i].tag_name, versionSpec)) {
-            return versions[i];
-        }
+  // NOTE: authStrategy is set conditionnaly. Docs specifies that GITHUB_TOKEN needs to be set explicitely.
+  //       To avoid breaking every pipeline that has no GITHUB_TOKEN set, this strategy is not passed until
+  //       a token is available.
+  //
+  // References:
+  //   - https://github.com/octokit/auth-action.js#createactionauth
+  //   - https://github.com/octokit/auth-action.js/blob/main/src/index.ts#L16-L20
+  //   - https://github.com/octokit/core.js/blob/main/src/index.ts#L121-L124
+  const octokit = new Octokit({
+    authStrategy: process.env.GITHUB_TOKEN ? createActionAuth : undefined,
+  });
+  const response = await octokit.request('GET /repos/:org/:repo/releases', {
+    org: 'saucelabs',
+    repo: 'saucectl',
+  });
+
+  const versions = response.data;
+  for (let i = 0; i < versions.length; i++) {
+    if (versions[i].draft || versions[i].assets?.length === 0) {
+      continue;
     }
+    if (isLatestRequested(versionSpec) && isStableVersion(versions[i])) {
+      return versions[i];
+    }
+    if (semver.satisfies(versions[i].tag_name, versionSpec)) {
+      return versions[i];
+    }
+  }
 }
 
 async function saucectlInstall({ versionSpec }) {
-    const release = await selectCompatibleVersion(versionSpec);
-    if (!release) {
-        core.setFailed(`No saucectl version compatible with ${versionSpec}`);
-        return false;
-    }
+  const release = await selectCompatibleVersion(versionSpec);
+  if (!release) {
+    core.setFailed(`No saucectl version compatible with ${versionSpec}`);
+    return false;
+  }
 
-    const resolvedVersion = release.tag_name;
-    const asset = await release.assets.find(asset => asset.name.includes(getPlatform()));
-    core.info(`Installing saucectl ${resolvedVersion}...`);
+  const resolvedVersion = release.tag_name;
+  const asset = await release.assets.find((asset) =>
+    asset.name.includes(getPlatform()),
+  );
+  core.info(`Installing saucectl ${resolvedVersion}...`);
 
-    // https://github.com/actions/setup-node/blob/main/src/installer.ts#L52
-    //toolPath = tc.find('node', versionSpec);
-    const downloadPath = await tc.downloadTool(asset.browser_download_url);
+  // https://github.com/actions/setup-node/blob/main/src/installer.ts#L52
+  //toolPath = tc.find('node', versionSpec);
+  const downloadPath = await tc.downloadTool(asset.browser_download_url);
 
-    let extPath;
-    if (os.platform() == 'win32') {
-        extPath = await tc.extractZip(downloadPath);
-    } else {
-        extPath = await tc.extractTar(downloadPath);
-    }
-    toolPath = await tc.cacheDir(extPath, 'saucectl', resolvedVersion);
-    core.addPath(toolPath);
-    core.info(`saucectl ${resolvedVersion} installed !`);
-    return true;
+  let extPath;
+  if (os.platform() == 'win32') {
+    extPath = await tc.extractZip(downloadPath);
+  } else {
+    extPath = await tc.extractTar(downloadPath);
+  }
+  const toolPath = await tc.cacheDir(extPath, 'saucectl', resolvedVersion);
+  core.addPath(toolPath);
+  core.info(`saucectl ${resolvedVersion} installed !`);
+  return true;
 }
 
 module.exports = { getPlatform, selectCompatibleVersion, saucectlInstall };
@@ -16440,76 +16467,82 @@ const fs = __nccwpck_require__(7147);
 const { promisify } = __nccwpck_require__(3837);
 const { awaitExecution } = __nccwpck_require__(8505);
 
-const lstat = promisify(fs.lstat)
+const lstat = promisify(fs.lstat);
 
 function buildSaucectlArgs(opts) {
-    const args = ['run'];
-    if (opts.configurationFile) {
-        args.push('-c', opts.configurationFile);
-    }
-    if (opts.runRegion) {
-        args.push('--region', opts.runRegion);
-    }
-    if (opts.concurrency) {
-        args.push('--ccy', opts.concurrency);
-    }
-    if (opts.selectSuite) {
-        args.push('--select-suite', opts.selectSuite);
-    }
-    if (opts.timeout) {
-        args.push('--timeout', opts.timeout);
-    }
-    if (opts.tunnelName) {
-        args.push('--tunnel-name', opts.tunnelName);
-    }
-    if (opts.tunnelOwner) {
-        args.push('--tunnel-owner', opts.tunnelOwner);
-    }
-    if (opts.sauceignore) {
-        args.push('--sauceignore', opts.sauceignore);
-    }
-    if (opts.showConsoleLog) {
-        args.push('--show-console-log');
-    }
-    for (const env of opts.env || []) {
-        args.push('-e', env);
-    }
-    if (opts.async) {
-        args.push('--async');
-    }
-    return args;
+  const args = ['run'];
+  if (opts.configurationFile) {
+    args.push('-c', opts.configurationFile);
+  }
+  if (opts.runRegion) {
+    args.push('--region', opts.runRegion);
+  }
+  if (opts.concurrency) {
+    args.push('--ccy', opts.concurrency);
+  }
+  if (opts.selectSuite) {
+    args.push('--select-suite', opts.selectSuite);
+  }
+  if (opts.timeout) {
+    args.push('--timeout', opts.timeout);
+  }
+  if (opts.tunnelName) {
+    args.push('--tunnel-name', opts.tunnelName);
+  }
+  if (opts.tunnelOwner) {
+    args.push('--tunnel-owner', opts.tunnelOwner);
+  }
+  if (opts.sauceignore) {
+    args.push('--sauceignore', opts.sauceignore);
+  }
+  if (opts.showConsoleLog) {
+    args.push('--show-console-log');
+  }
+  for (const env of opts.env || []) {
+    args.push('-e', env);
+  }
+  if (opts.async) {
+    args.push('--async');
+  }
+  return args;
 }
 
 async function saucectlRun(opts) {
-    const { workingDirectory } = opts;
+  const { workingDirectory } = opts;
 
-    if (workingDirectory) {
-        let stats;
-        try {
-            stats = await lstat(workingDirectory);
-        } catch {
-            core.warning(`${workingDirectory} is unexistant`);
-        }
-        if (!stats || !stats.isDirectory()) {
-            core.setFailed(`${workingDirectory} does not exists.`);
-            return false;
-        }
-        process.chdir(workingDirectory);
+  if (workingDirectory) {
+    let stats;
+    try {
+      stats = await lstat(workingDirectory);
+    } catch {
+      core.warning(`${workingDirectory} is unexistant`);
     }
-
-    core.info("Launching saucectl !");
-    const saucectlArgs = buildSaucectlArgs(opts);
-    core.info(`Command-line: saucectl ${saucectlArgs.join(" ")}`)
-
-    const child = childProcess.spawn('saucectl', saucectlArgs, { env: { ...process.env, SAUCE_USERNAME: opts.sauceUsername, SAUCE_ACCESS_KEY: opts.sauceAccessKey }});
-    const exitCode = await awaitExecution(child);
-
-    if (exitCode != 0) {
-        core.setFailed(`saucectl: Failure`);
-        return false;
+    if (!stats || !stats.isDirectory()) {
+      core.setFailed(`${workingDirectory} does not exists.`);
+      return false;
     }
-    return true;
-};
+    process.chdir(workingDirectory);
+  }
+
+  core.info('Launching saucectl !');
+  const saucectlArgs = buildSaucectlArgs(opts);
+  core.info(`Command-line: saucectl ${saucectlArgs.join(' ')}`);
+
+  const child = childProcess.spawn('saucectl', saucectlArgs, {
+    env: {
+      ...process.env,
+      SAUCE_USERNAME: opts.sauceUsername,
+      SAUCE_ACCESS_KEY: opts.sauceAccessKey,
+    },
+  });
+  const exitCode = await awaitExecution(child);
+
+  if (exitCode != 0) {
+    core.setFailed(`saucectl: Failure`);
+    return false;
+  }
+  return true;
+}
 
 module.exports = { saucectlRun, awaitExecution, buildSaucectlArgs };
 
@@ -16710,41 +16743,46 @@ const { awaitExecution } = __nccwpck_require__(8505);
 const config = __nccwpck_require__(4570);
 
 async function run() {
-    const cfg = config.get();
-    if (!cfg) {
-        core.setFailed("Invalid configuration.");
-        return;
-    }
+  const cfg = config.get();
+  if (!cfg) {
+    core.setFailed('Invalid configuration.');
+    return;
+  }
 
-    if (!process.env.GITHUB_TOKEN) {
-        core.warning('No GITHUB_TOKEN detected.')
-        core.warning('Be sure to explicitly set GITHUB_TOKEN in saucectl-run-action step of your workflow.');
-        core.warning('Unauthenticated usage may result in "API rate limit exceeded" error.');
-    }
+  if (!process.env.GITHUB_TOKEN) {
+    core.warning('No GITHUB_TOKEN detected.');
+    core.warning(
+      'Be sure to explicitly set GITHUB_TOKEN in saucectl-run-action step of your workflow.',
+    );
+    core.warning(
+      'Unauthenticated usage may result in "API rate limit exceeded" error.',
+    );
+  }
 
-    // Install saucectl
-    if (!await saucectlInstall({ versionSpec: cfg.saucectlVersion })) {
-        return;
-    }
+  // Install saucectl
+  if (!(await saucectlInstall({ versionSpec: cfg.saucectlVersion }))) {
+    return;
+  }
 
-    // Run it to confirm version
-    const child = childProcess.spawn('saucectl', ['--version']);
-    child.stdout.pipe(process.stdout);
-    child.stderr.pipe(process.stderr);
-    const exitCode = await awaitExecution(child);
-    core.info(`ExitCode: ${exitCode}`);
+  // Run it to confirm version
+  const child = childProcess.spawn('saucectl', ['--version']);
+  child.stdout.pipe(process.stdout);
+  child.stderr.pipe(process.stderr);
+  const exitCode = await awaitExecution(child);
+  core.info(`ExitCode: ${exitCode}`);
 
-    // Really execute saucectl
-    if (!cfg.skipRun) {
-        if (!await saucectlRun(cfg)) {
-            return;
-        }
+  // Really execute saucectl
+  if (!cfg.skipRun) {
+    if (!(await saucectlRun(cfg))) {
+      return;
     }
+  }
 }
 
 if (require.main === require.cache[eval('__filename')]) {
-    run();
+  run();
 }
+
 })();
 
 module.exports = __webpack_exports__;
