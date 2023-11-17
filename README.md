@@ -34,12 +34,13 @@ the `env` field, or you may face an `API rate limit exceeded` error.
       MY_FIRST_VAR=VALUE
       MY_SECOND_VAR=VALUE
 
-    # Specify an alternative configuration file for this execution.
+    # Specifies an alternative configuration file for this execution.
     # Default: .sauce/config.yml
     config-file: .sauce/myconfig.yml
 
     # Specifies the Sauce Labs data center through which tests will run.
     # Valid values are us-west-1 or eu-central-1.
+    # `region` is mandatory and should be set either in the Sauce Config file or by using the `--region` flag.
     region: us-west-1
 
     # Controls how many suites run in parallel.
