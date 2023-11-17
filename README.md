@@ -40,7 +40,6 @@ the `env` field, or you may face an `API rate limit exceeded` error.
 
     # Specifies the Sauce Labs data center through which tests will run.
     # Valid values are us-west-1 or eu-central-1.
-    # `region` is mandatory and should be set either in the Sauce Config file or by setting this field.
     region: us-west-1
 
     # Controls how many suites run in parallel.
