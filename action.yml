@@ -20,11 +20,11 @@ inputs:
     default: .
     required: false
   config-file:
-    description: Specify an alternative configuration file to the default .sauce/config.yml for this execution.
+    description: Specifies an alternative configuration file to the default .sauce/config.yml for this execution.
     default: .sauce/config.yml
     required: false
   region:
-    description: Specifies the Sauce Labs data center through which tests will run. Valid values are us-west-1 (default) or eu-central-1.
+    description: Specifies the Sauce Labs data center through which tests will run. Valid values are us-west-1 or eu-central-1.
     required: false
   concurrency:
     description: Controls how many suites run in parallel.
