@@ -16394,7 +16394,7 @@ function isStableVersion(version) {
 }
 
 async function selectCompatibleVersion(versionSpec) {
-  // NOTE: authStrategy is set conditionnaly. Docs specifies that GITHUB_TOKEN needs to be set explicitely.
+  // NOTE: authStrategy is set conditionally. Docs specifies that GITHUB_TOKEN needs to be set explicitly.
   //       To avoid breaking every pipeline that has no GITHUB_TOKEN set, this strategy is not passed until
   //       a token is available.
   //
