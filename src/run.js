@@ -52,18 +52,20 @@ async function saucectlRun(opts) {
     try {
       stats = await lstat(workingDirectory);
     } catch {
-      core.warning(`${workingDirectory} is unexistant`);
+      core.setFailed(
+        `${workingDirectory} does not exist or is not accessible.`,
+      );
+      return false;
     }
-    if (!stats || !stats.isDirectory()) {
-      core.setFailed(`${workingDirectory} does not exists.`);
+    if (!stats.isDirectory()) {
+      core.setFailed(`${workingDirectory} is not a directory.`);
       return false;
     }
     process.chdir(workingDirectory);
   }
 
-  core.info('Launching saucectl !');
   const saucectlArgs = buildSaucectlArgs(opts);
-  core.info(`Command-line: saucectl ${saucectlArgs.join(' ')}`);
+  core.info(`saucectl ${saucectlArgs.join(' ')}`);
 
   const child = childProcess.spawn('saucectl', saucectlArgs, {
     env: {
@@ -72,9 +74,10 @@ async function saucectlRun(opts) {
       SAUCE_ACCESS_KEY: opts.sauceAccessKey,
     },
   });
+
   const exitCode = await awaitExecution(child);
 
-  if (exitCode != 0) {
+  if (exitCode !== 0) {
     core.setFailed(`saucectl: Failure`);
     return false;
   }

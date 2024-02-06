@@ -79,7 +79,7 @@ describe('Installation', () => {
     os.platform.mockReturnValue('linux');
     os.arch.mockReturnValue('x64');
 
-    const ret = await install.saucectlInstall({ versionSpec: '0.29.5' });
+    const ret = await install.install('0.29.5');
     expect(ret).toBe(false);
     expect(requestMock).toHaveBeenCalled();
   });
@@ -93,7 +93,7 @@ describe('Installation', () => {
     );
     const addPathFn = core.addPath.mockReturnValue('/bin/saucectl');
 
-    const ret = await install.saucectlInstall({ versionSpec: '0.25.1' });
+    const ret = await install.install('0.25.1');
 
     expect(ret).toBe(true);
     expect(requestMock).toHaveBeenCalled();
@@ -111,7 +111,7 @@ describe('Installation', () => {
     );
     const addPathFn = core.addPath.mockReturnValue('/bin/saucectl');
 
-    const ret = await install.saucectlInstall({ versionSpec: '0.25.1' });
+    const ret = await install.install('0.25.1');
 
     expect(ret).toBe(true);
     expect(requestMock).toHaveBeenCalled();

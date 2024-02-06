@@ -16244,7 +16244,7 @@ const getSettingString = function (keys, defaultValue) {
 
 const getSettingBool = function (keys, defaultValue) {
   return (
-    getSettingString(keys, defaultValue.toString()).toLowerCase() == 'true'
+    getSettingString(keys, defaultValue.toString()).toLowerCase() === 'true'
   );
 };
 
@@ -16286,7 +16286,7 @@ const get = function () {
     async: getSettingBool(['async'], defaultConfig.async),
   };
 
-  if (sauceConfig.saucectlVersion != 'latest') {
+  if (sauceConfig.saucectlVersion !== 'latest') {
     if (!semver.valid(sauceConfig.saucectlVersion)) {
       core.setFailed(
         `saucectl-version: ${sauceConfig.saucectlVersion}: invalid version format`,
@@ -16385,16 +16385,16 @@ function getPlatform() {
   return osName && arch && `${osName}_${arch}`;
 }
 
-function isLatestRequested(versionSpec) {
-  return versionSpec === undefined || versionSpec === 'latest';
+function isLatestRequested(version) {
+  return version === undefined || version === 'latest';
 }
 
 function isStableVersion(version) {
   return !version.prerelease && !version.draft;
 }
 
-async function selectCompatibleVersion(versionSpec) {
-  // NOTE: authStrategy is set conditionnaly. Docs specifies that GITHUB_TOKEN needs to be set explicitely.
+async function selectCompatibleVersion(version) {
+  // NOTE: authStrategy is set conditionally. Docs specifies that GITHUB_TOKEN needs to be set explicitly.
   //       To avoid breaking every pipeline that has no GITHUB_TOKEN set, this strategy is not passed until
   //       a token is available.
   //
@@ -16415,19 +16415,19 @@ async function selectCompatibleVersion(versionSpec) {
     if (versions[i].draft || versions[i].assets?.length === 0) {
       continue;
     }
-    if (isLatestRequested(versionSpec) && isStableVersion(versions[i])) {
+    if (isLatestRequested(version) && isStableVersion(versions[i])) {
       return versions[i];
     }
-    if (semver.satisfies(versions[i].tag_name, versionSpec)) {
+    if (semver.satisfies(versions[i].tag_name, version)) {
       return versions[i];
     }
   }
 }
 
-async function saucectlInstall({ versionSpec }) {
-  const release = await selectCompatibleVersion(versionSpec);
+async function install(version) {
+  const release = await selectCompatibleVersion(version);
   if (!release) {
-    core.setFailed(`No saucectl version compatible with ${versionSpec}`);
+    core.setFailed(`No saucectl version compatible with ${version}`);
     return false;
   }
 
@@ -16442,7 +16442,7 @@ async function saucectlInstall({ versionSpec }) {
   const downloadPath = await tc.downloadTool(asset.browser_download_url);
 
   let extPath;
-  if (os.platform() == 'win32') {
+  if (os.platform() === 'win32') {
     extPath = await tc.extractZip(downloadPath);
   } else {
     extPath = await tc.extractTar(downloadPath);
@@ -16453,7 +16453,7 @@ async function saucectlInstall({ versionSpec }) {
   return true;
 }
 
-module.exports = { getPlatform, selectCompatibleVersion, saucectlInstall };
+module.exports = { getPlatform, selectCompatibleVersion, install };
 
 
 /***/ }),
@@ -16515,18 +16515,20 @@ async function saucectlRun(opts) {
     try {
       stats = await lstat(workingDirectory);
     } catch {
-      core.warning(`${workingDirectory} is unexistant`);
+      core.setFailed(
+        `${workingDirectory} does not exist or is not accessible.`,
+      );
+      return false;
     }
-    if (!stats || !stats.isDirectory()) {
-      core.setFailed(`${workingDirectory} does not exists.`);
+    if (!stats.isDirectory()) {
+      core.setFailed(`${workingDirectory} is not a directory.`);
       return false;
     }
     process.chdir(workingDirectory);
   }
 
-  core.info('Launching saucectl !');
   const saucectlArgs = buildSaucectlArgs(opts);
-  core.info(`Command-line: saucectl ${saucectlArgs.join(' ')}`);
+  core.info(`saucectl ${saucectlArgs.join(' ')}`);
 
   const child = childProcess.spawn('saucectl', saucectlArgs, {
     env: {
@@ -16535,9 +16537,10 @@ async function saucectlRun(opts) {
       SAUCE_ACCESS_KEY: opts.sauceAccessKey,
     },
   });
+
   const exitCode = await awaitExecution(child);
 
-  if (exitCode != 0) {
+  if (exitCode !== 0) {
     core.setFailed(`saucectl: Failure`);
     return false;
   }
@@ -16736,7 +16739,7 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(2186);
 const childProcess = __nccwpck_require__(2081);
-const { saucectlInstall } = __nccwpck_require__(1430);
+const { install } = __nccwpck_require__(1430);
 const { saucectlRun } = __nccwpck_require__(2475);
 const { awaitExecution } = __nccwpck_require__(8505);
 
@@ -16760,7 +16763,7 @@ async function run() {
   }
 
   // Install saucectl
-  if (!(await saucectlInstall({ versionSpec: cfg.saucectlVersion }))) {
+  if (!(await install(cfg.saucectlVersion))) {
     return;
   }
 
@@ -16773,9 +16776,7 @@ async function run() {
 
   // Really execute saucectl
   if (!cfg.skipRun) {
-    if (!(await saucectlRun(cfg))) {
-      return;
-    }
+    await saucectlRun(cfg);
   }
 }
 
