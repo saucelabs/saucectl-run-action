@@ -16524,7 +16524,6 @@ async function saucectlRun(opts) {
     process.chdir(workingDirectory);
   }
 
-  core.info('Launching saucectl!');
   const saucectlArgs = buildSaucectlArgs(opts);
   core.info(`saucectl ${saucectlArgs.join(' ')}`);
 
