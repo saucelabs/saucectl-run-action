@@ -16515,10 +16515,10 @@ async function saucectlRun(opts) {
     try {
       stats = await lstat(workingDirectory);
     } catch {
-      core.warning(`${workingDirectory} is unexistant`);
+      core.warning(`${workingDirectory} does not exist.`);
     }
     if (!stats || !stats.isDirectory()) {
-      core.setFailed(`${workingDirectory} does not exists.`);
+      core.setFailed(`${workingDirectory} does not exist.`);
       return false;
     }
     process.chdir(workingDirectory);
