@@ -63,7 +63,7 @@ async function saucectlRun(opts) {
 
   core.info('Launching saucectl!');
   const saucectlArgs = buildSaucectlArgs(opts);
-  core.info(`Command-line: saucectl ${saucectlArgs.join(' ')}`);
+  core.info(`saucectl ${saucectlArgs.join(' ')}`);
 
   const child = childProcess.spawn('saucectl', saucectlArgs, {
     env: {
