@@ -37,9 +37,7 @@ async function run() {
 
   // Really execute saucectl
   if (!cfg.skipRun) {
-    if (!(await saucectlRun(cfg))) {
-      return;
-    }
+    await saucectlRun(cfg);
   }
 }
 
