@@ -72,9 +72,10 @@ async function saucectlRun(opts) {
       SAUCE_ACCESS_KEY: opts.sauceAccessKey,
     },
   });
+
   const exitCode = await awaitExecution(child);
 
-  if (exitCode != 0) {
+  if (exitCode !== 0) {
     core.setFailed(`saucectl: Failure`);
     return false;
   }
