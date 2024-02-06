@@ -16385,15 +16385,15 @@ function getPlatform() {
   return osName && arch && `${osName}_${arch}`;
 }
 
-function isLatestRequested(versionSpec) {
-  return versionSpec === undefined || versionSpec === 'latest';
+function isLatestRequested(version) {
+  return version === undefined || version === 'latest';
 }
 
 function isStableVersion(version) {
   return !version.prerelease && !version.draft;
 }
 
-async function selectCompatibleVersion(versionSpec) {
+async function selectCompatibleVersion(version) {
   // NOTE: authStrategy is set conditionally. Docs specifies that GITHUB_TOKEN needs to be set explicitly.
   //       To avoid breaking every pipeline that has no GITHUB_TOKEN set, this strategy is not passed until
   //       a token is available.
@@ -16415,19 +16415,19 @@ async function selectCompatibleVersion(versionSpec) {
     if (versions[i].draft || versions[i].assets?.length === 0) {
       continue;
     }
-    if (isLatestRequested(versionSpec) && isStableVersion(versions[i])) {
+    if (isLatestRequested(version) && isStableVersion(versions[i])) {
       return versions[i];
     }
-    if (semver.satisfies(versions[i].tag_name, versionSpec)) {
+    if (semver.satisfies(versions[i].tag_name, version)) {
       return versions[i];
     }
   }
 }
 
-async function install({ versionSpec }) {
-  const release = await selectCompatibleVersion(versionSpec);
+async function install(version) {
+  const release = await selectCompatibleVersion(version);
   if (!release) {
-    core.setFailed(`No saucectl version compatible with ${versionSpec}`);
+    core.setFailed(`No saucectl version compatible with ${version}`);
     return false;
   }
 
@@ -16760,7 +16760,7 @@ async function run() {
   }
 
   // Install saucectl
-  if (!(await install({ versionSpec: cfg.saucectlVersion }))) {
+  if (!(await install(cfg.saucectlVersion))) {
     return;
   }
 

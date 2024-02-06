@@ -24,7 +24,7 @@ async function run() {
   }
 
   // Install saucectl
-  if (!(await install({ versionSpec: cfg.saucectlVersion }))) {
+  if (!(await install(cfg.saucectlVersion))) {
     return;
   }
 
