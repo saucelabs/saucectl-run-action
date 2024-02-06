@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const childProcess = require('child_process');
-const { saucectlInstall } = require('./install');
+const { install } = require('./install');
 const { saucectlRun } = require('./run');
 const { awaitExecution } = require('./helpers');
 
@@ -24,7 +24,7 @@ async function run() {
   }
 
   // Install saucectl
-  if (!(await saucectlInstall({ versionSpec: cfg.saucectlVersion }))) {
+  if (!(await install({ versionSpec: cfg.saucectlVersion }))) {
     return;
   }
 

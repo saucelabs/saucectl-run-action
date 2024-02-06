@@ -62,7 +62,7 @@ async function selectCompatibleVersion(versionSpec) {
   }
 }
 
-async function saucectlInstall({ versionSpec }) {
+async function install({ versionSpec }) {
   const release = await selectCompatibleVersion(versionSpec);
   if (!release) {
     core.setFailed(`No saucectl version compatible with ${versionSpec}`);
@@ -91,4 +91,4 @@ async function saucectlInstall({ versionSpec }) {
   return true;
 }
 
-module.exports = { getPlatform, selectCompatibleVersion, saucectlInstall };
+module.exports = { getPlatform, selectCompatibleVersion, install };

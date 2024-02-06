@@ -16424,7 +16424,7 @@ async function selectCompatibleVersion(versionSpec) {
   }
 }
 
-async function saucectlInstall({ versionSpec }) {
+async function install({ versionSpec }) {
   const release = await selectCompatibleVersion(versionSpec);
   if (!release) {
     core.setFailed(`No saucectl version compatible with ${versionSpec}`);
@@ -16453,7 +16453,7 @@ async function saucectlInstall({ versionSpec }) {
   return true;
 }
 
-module.exports = { getPlatform, selectCompatibleVersion, saucectlInstall };
+module.exports = { getPlatform, selectCompatibleVersion, install };
 
 
 /***/ }),
@@ -16736,7 +16736,7 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(2186);
 const childProcess = __nccwpck_require__(2081);
-const { saucectlInstall } = __nccwpck_require__(1430);
+const { install } = __nccwpck_require__(1430);
 const { saucectlRun } = __nccwpck_require__(2475);
 const { awaitExecution } = __nccwpck_require__(8505);
 
@@ -16760,7 +16760,7 @@ async function run() {
   }
 
   // Install saucectl
-  if (!(await saucectlInstall({ versionSpec: cfg.saucectlVersion }))) {
+  if (!(await install({ versionSpec: cfg.saucectlVersion }))) {
     return;
   }
 
