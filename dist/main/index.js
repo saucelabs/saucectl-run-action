@@ -16442,7 +16442,7 @@ async function install({ versionSpec }) {
   const downloadPath = await tc.downloadTool(asset.browser_download_url);
 
   let extPath;
-  if (os.platform() == 'win32') {
+  if (os.platform() === 'win32') {
     extPath = await tc.extractZip(downloadPath);
   } else {
     extPath = await tc.extractTar(downloadPath);
