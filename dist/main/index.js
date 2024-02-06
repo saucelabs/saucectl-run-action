@@ -16515,7 +16515,7 @@ async function saucectlRun(opts) {
     try {
       stats = await lstat(workingDirectory);
     } catch {
-      core.warning(`${workingDirectory} does not exist.`);
+      core.error(`${workingDirectory} does not exist.`);
     }
     if (!stats || !stats.isDirectory()) {
       core.setFailed(`${workingDirectory} does not exist.`);
