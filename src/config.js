@@ -44,7 +44,7 @@ const getSettingString = function (keys, defaultValue) {
 
 const getSettingBool = function (keys, defaultValue) {
   return (
-    getSettingString(keys, defaultValue.toString()).toLowerCase() == 'true'
+    getSettingString(keys, defaultValue.toString()).toLowerCase() === 'true'
   );
 };
 
@@ -86,7 +86,7 @@ const get = function () {
     async: getSettingBool(['async'], defaultConfig.async),
   };
 
-  if (sauceConfig.saucectlVersion != 'latest') {
+  if (sauceConfig.saucectlVersion !== 'latest') {
     if (!semver.valid(sauceConfig.saucectlVersion)) {
       core.setFailed(
         `saucectl-version: ${sauceConfig.saucectlVersion}: invalid version format`,
