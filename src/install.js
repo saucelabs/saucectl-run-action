@@ -108,6 +108,10 @@ async function install(version) {
 function retrieveCache(version) {
   const binPath = tc.find('saucectl', version);
   if (!binPath) {
+    // FIXME remove debug statements
+    const allVersions = tc.findAllVersions('saucectl');
+    core.info(`Versions of saucectl available: ${allVersions}`);
+
     return false;
   }
 
