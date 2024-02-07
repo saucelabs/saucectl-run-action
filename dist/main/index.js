@@ -16425,6 +16425,14 @@ async function selectCompatibleVersion(version) {
 }
 
 async function install(version) {
+  // Check if saucectl is already cached. Can only look up concrete versions.
+  // If latest is requested, we need to first look up what the latest version is.
+  if (!isLatestRequested(version)) {
+    if (retrieveCache(version)) {
+      return true;
+    }
+  }
+
   const release = await selectCompatibleVersion(version);
   if (!release) {
     core.setFailed(`No saucectl version compatible with ${version}`);
@@ -16435,10 +16443,14 @@ async function install(version) {
   const asset = await release.assets.find((asset) =>
     asset.name.includes(getPlatform()),
   );
+
+  // Now that we know the resolved version, we can check the cache again.
+  if (retrieveCache(resolvedVersion)) {
+    return true;
+  }
+
   core.info(`Installing saucectl ${resolvedVersion}...`);
 
-  // https://github.com/actions/setup-node/blob/main/src/installer.ts#L52
-  //toolPath = tc.find('node', versionSpec);
   const downloadPath = await tc.downloadTool(asset.browser_download_url);
 
   let extPath;
@@ -16449,8 +16461,20 @@ async function install(version) {
   }
   const toolPath = await tc.cacheDir(extPath, 'saucectl', resolvedVersion);
   core.addPath(toolPath);
-  core.info(`saucectl ${resolvedVersion} installed !`);
+
+  core.info(`saucectl ${resolvedVersion} installed!`);
+
   return true;
+}
+
+function retrieveCache(version) {
+  const binPath = tc.find('saucectl', version);
+  if (!binPath) {
+    return false;
+  }
+
+  core.addPath(binPath);
+  core.info(`saucectl ${version} found in cache`);
 }
 
 module.exports = { getPlatform, selectCompatibleVersion, install };
