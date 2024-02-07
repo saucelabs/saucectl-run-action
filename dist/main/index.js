@@ -16475,6 +16475,8 @@ function retrieveCache(version) {
 
   core.addPath(binPath);
   core.info(`saucectl ${version} found in cache`);
+
+  return true;
 }
 
 module.exports = { getPlatform, selectCompatibleVersion, install };
