@@ -100,6 +100,10 @@ async function install(version) {
   const toolPath = await tc.cacheDir(extPath, 'saucectl', resolvedVersion);
   core.addPath(toolPath);
 
+  // FIXME remove debug statements
+  const allVersions = tc.findAllVersions('saucectl');
+  core.info(`Versions of saucectl available: ${allVersions}`);
+
   core.info(`saucectl ${resolvedVersion} installed!`);
 
   return true;
