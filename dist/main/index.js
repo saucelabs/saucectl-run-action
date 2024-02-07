@@ -16428,7 +16428,7 @@ async function install(version) {
   // Check if saucectl is already cached. Can only look up concrete versions.
   // If latest is requested, we need to first look up what the latest version is.
   if (!isLatestRequested(version)) {
-    if (retrieveCache(version)) {
+    if (addFromCache(version)) {
       return true;
     }
   }
@@ -16445,7 +16445,7 @@ async function install(version) {
   );
 
   // Now that we know the resolved version, we can check the cache again.
-  if (retrieveCache(resolvedVersion)) {
+  if (addFromCache(resolvedVersion)) {
     return true;
   }
 
@@ -16467,7 +16467,7 @@ async function install(version) {
   return true;
 }
 
-function retrieveCache(version) {
+function addFromCache(version) {
   const binPath = tc.find('saucectl', version);
   if (!binPath) {
     // FIXME remove debug statements
