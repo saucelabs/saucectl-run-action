@@ -15,6 +15,7 @@ const defaultConfig = {
   selectSuite: undefined,
   tunnelName: undefined,
   tunnelOwner: undefined,
+  tunnelTimeout: undefined,
   showConsoleLog: false,
   env: [],
   async: false,
@@ -78,6 +79,10 @@ const get = function () {
     selectSuite: getSettingString(['select-suite'], defaultConfig.selectSuite),
     tunnelName: getSettingString(['tunnel-name'], defaultConfig.tunnelName),
     tunnelOwner: getSettingString(['tunnel-owner'], defaultConfig.tunnelOwner),
+    tunnelTimeout: getSettingString(
+      ['tunnel-timeout'],
+      defaultConfig.tunnelTimeout,
+    ),
     env: getEnvVariables(['env']),
     showConsoleLog: getSettingBool(
       ['show-console-log'],

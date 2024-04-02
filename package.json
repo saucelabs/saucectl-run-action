@@ -30,7 +30,7 @@
     "@octokit/action": "^4.0.8",
     "@octokit/auth-action": "^2.0.3",
     "@octokit/rest": "^19.0.4",
-    "semver": "^7.3.8"
+    "semver": "^7.6.0"
   },
   "devDependencies": {
     "@octokit/fixtures": "^22.0.6",

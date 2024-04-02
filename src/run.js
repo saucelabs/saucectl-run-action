@@ -29,6 +29,9 @@ function buildSaucectlArgs(opts) {
   if (opts.tunnelOwner) {
     args.push('--tunnel-owner', opts.tunnelOwner);
   }
+  if (opts.tunnelTimeout) {
+    args.push('--tunnel-timeout', opts.tunnelTimeout);
+  }
   if (opts.sauceignore) {
     args.push('--sauceignore', opts.sauceignore);
   }

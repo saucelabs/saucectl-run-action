@@ -41,6 +41,9 @@ inputs:
   tunnel-owner:
     description: Identifies the Sauce Labs user who created the specified tunnel, which is required if the user running the tests did not create the tunnel.
     required: false
+  tunnel-timeout:
+    description: How long to wait for the specified tunnel to be ready. Supports duration values like '10s', '30m' etc.
+    required: false
   skip-run:
     description: Skip execution of saucectl (only install binary).
     default: "false"
