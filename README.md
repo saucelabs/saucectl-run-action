@@ -55,6 +55,9 @@ the `env` field, or you may face an `API rate limit exceeded` error.
 
     # Identifies the Sauce Labs user who created the specified tunnel, which is required if the user running the tests did not create the tunnel.
     tunnel-owner: ""
+    
+    # How long to wait for the specified tunnel to be ready. Supports duration values like '10s', '30m' etc.
+    tunnel-timeout: 30s
 
     # Specifies a test suite to execute by name rather than all suites defined in the config file.
     select-suite: ""

@@ -16394,6 +16394,7 @@ const defaultConfig = {
   selectSuite: undefined,
   tunnelName: undefined,
   tunnelOwner: undefined,
+  tunnelTimeout: undefined,
   showConsoleLog: false,
   env: [],
   async: false,
@@ -16457,6 +16458,10 @@ const get = function () {
     selectSuite: getSettingString(['select-suite'], defaultConfig.selectSuite),
     tunnelName: getSettingString(['tunnel-name'], defaultConfig.tunnelName),
     tunnelOwner: getSettingString(['tunnel-owner'], defaultConfig.tunnelOwner),
+    tunnelTimeout: getSettingString(
+      ['tunnel-timeout'],
+      defaultConfig.tunnelTimeout,
+    ),
     env: getEnvVariables(['env']),
     showConsoleLog: getSettingBool(
       ['show-console-log'],
@@ -16670,6 +16675,9 @@ function buildSaucectlArgs(opts) {
   }
   if (opts.tunnelOwner) {
     args.push('--tunnel-owner', opts.tunnelOwner);
+  }
+  if (opts.tunnelTimeout) {
+    args.push('--tunnel-timeout', opts.tunnelTimeout);
   }
   if (opts.sauceignore) {
     args.push('--sauceignore', opts.sauceignore);
