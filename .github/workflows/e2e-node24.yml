@@ -1,0 +1,28 @@
+name: E2E Node 24 Verification
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'action.yml'
+      - 'dist/main/**'
+
+jobs:
+  e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run saucectl-run-action (install-only)
+        uses: ./
+        with:
+          saucectl-version: latest
+          skip-run: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
