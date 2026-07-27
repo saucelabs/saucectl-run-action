@@ -1,3 +1,13 @@
+<p align="center">
+  <a href="https://saucelabs.com/?utm_source=github&utm_medium=saucectl-run-action">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset=".github/assets/sauce-labs-logo-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset=".github/assets/sauce-labs-logo-light.svg">
+      <img alt="Sauce Labs" width="320" src=".github/assets/sauce-labs-logo-light.svg">
+    </picture>
+  </a>
+</p>
+
 # Saucectl Run Action from Sauce Labs
 
 This action installs [saucectl](https://github.com/saucelabs/saucectl/) and launches tests. \

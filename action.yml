@@ -3,7 +3,7 @@ description: A GitHub action to run your tests on Sauce Labs.
 author: devx@saucelabs.com
 branding:
     icon: check-circle
-    color: red
+    color: gray-dark
 inputs:
   saucectl-version:
     description: 'Version of saucectl to use. Example: v0.25.1'
