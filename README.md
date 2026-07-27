@@ -8,6 +8,8 @@
   </a>
 </p>
 
+<br>
+
 # Saucectl Run Action from Sauce Labs
 
 This action installs [saucectl](https://github.com/saucelabs/saucectl/) and launches tests. \
